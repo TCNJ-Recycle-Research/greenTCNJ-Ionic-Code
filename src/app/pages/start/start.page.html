@@ -16,7 +16,7 @@
     <ion-row>
         <ion-col>
           <!-- <ion-img [src]="assets/logo" alt="logo-image"></ion-img> -->
-          <img class="center" src="../../assets/icon/icon.png" vertical-align="middle">
+          <img alt="" class="center" src="../../assets/icon/icon.png" vertical-align="middle">
         </ion-col>
    </ion-row>
   </ion-grid>
@@ -35,13 +35,13 @@
       <ion-col align-self-center>
         <span class="already">Need an Account?</span>
 
-        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Register</ion-button>
+        <ion-button aria-label="register" [routerLink]="['/registration']" expand="block" color="primary">Register</ion-button>
 
         <span class="divider line one-line">or</span>
 
         <span class="already">Already a user?</span>
 
-        <ion-button [routerLink]="['/login']" expand="block" color="success">Sign In</ion-button>
+        <ion-button aria-label="sign in" [routerLink]="['/login']" expand="block" color="success">Sign In</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

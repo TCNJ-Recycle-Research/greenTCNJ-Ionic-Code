@@ -18,6 +18,12 @@ export class MyRegisteredEventsPage{
   myEvents = [];
   pastEvents = [];
   futureEvents = [];
+
+  noFutureEvents: any;
+  noPastEvents: any;
+  noEvents: any;
+
+
   today = new Date(Date.now());
   gotAllEvents: any;
   type: string; // used to initialize tab to the view all page 
@@ -86,6 +92,25 @@ export class MyRegisteredEventsPage{
       }
     }
     console.log("future length: " + this.futureEvents.length);
+    
+    if(this.myEvents.length == 0){
+      this.noEvents = "No registered events.";
+    }else{
+      this.noEvents = null;
+    }
+    
+    if(this.futureEvents.length == 0){
+      this.noFutureEvents = "No upcoming registered events.";
+    }else{
+      this.noFutureEvents = null;
+    }
+    
+    if(this.pastEvents.length == 0){
+      this.noPastEvents = "No registered past events.";
+    }else{
+      this.noPastEvents = null;
+    }
+
   }
 
 

@@ -18,7 +18,7 @@
   <ion-row>
       <ion-col>
         <!-- <ion-img [src]="assets/logo" alt="logo-image"></ion-img> -->
-        <img class="center" src="../../assets/icon/icon.png" vertical-align="middle">
+        <img alt="" class="center" src="../../assets/icon/icon.png" vertical-align="middle">
       </ion-col>
  </ion-row>
 </ion-grid>
@@ -60,7 +60,7 @@
         <div class="validation-errors">
           <span *ngIf="loginFailure()">Email or password entered was incorrect</span>        
         </div>
-        <ion-button type="submit" color="success" expand="block" (click)="checkValidLogin()">Login</ion-button>
+        <ion-button aria-label="Login" type="submit" color="success" expand="block" (click)="checkValidLogin()">Login</ion-button>
       </ion-col>
     </ion-row>
 

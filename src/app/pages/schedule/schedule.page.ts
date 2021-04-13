@@ -120,18 +120,31 @@ createStaticNormalDayEvents(events) {
     this.router.navigate(['/my-registered-events'], navigationExtras);
   }
 
+
+  // https://stackoverflow.com/questions/1500260/detect-urls-in-text-with-javascript 
+  // function to detect a link from within an event description and allow it to be clickable in the event
+  linkify(text) {
+    var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(urlRegex, function(url) {
+      url = '<a href="' + url + '" target="_blank">  here </a>';
+      console.log(url);
+      return url;
+    });
+  }
+
   async onEventSelected(event) {
 
     let date = formatDate(event.startTime, 'MMM d, yyyy', this.locale);
     let start = formatDate(event.startTime, 'h:mma', this.locale);
     let end = formatDate(event.endTime, 'h:mma', this.locale);
+
     const modal = await this.modalCtrl.create({
       component: EventModalPage,
       componentProps:{
         eventObj: event,
         eventName: event.title,
         eventTime: date + '    '  + start + ' - ' + end,
-        eventDescription: event.desc,
+        eventDescription: this.linkify(event.desc),
         eventID: event.ID,
         registered: event.registered
       }

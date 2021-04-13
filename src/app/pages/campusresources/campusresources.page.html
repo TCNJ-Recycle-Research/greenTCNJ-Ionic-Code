@@ -22,7 +22,15 @@
         You can search which materials can be discarded or recycled on campus, register for upcoming environmental events, and view the latest recycling and environmental news for TCNJ.</p>
     </ion-item>
 
-  <ion-item class="ion-text-wrap" >
+    <ion-list>
+      <ion-item *ngFor="let resource of campusResources">        
+        <a href= {{resource.link}} > {{ resource.name }} </a>
+      </ion-item>
+    </ion-list>
+    
+
+
+  <!-- <ion-item class="ion-text-wrap" >
     <a href="https://climate.tcnj.edu/">Presidents' Climate Commitment Committee</a>
   </ion-item>
 
@@ -46,15 +54,6 @@
   <ion-item class="ion-text-wrap" >
     <a href="https://polisci.tcnj.edu/sustainability-council/">Environmental Sustainability Council</a>
   </ion-item>    
-  
-  <!--
-
-<ion-item class="ion-text-wrap" >
-    <a href="https://climate.tcnj.edu/">Old PCCC, Replaced with the ESC</a>
-  </ion-item> 
-
-  -->
-   
     
   <ion-item class="ion-text-wrap" >
     <a href="https://energy.tcnj.edu/">Energy Conservation</a>
@@ -70,7 +69,7 @@
   
   <ion-item class="ion-text-wrap" >
     <a href="https://environmentalstudies.tcnj.edu/about-environmental-studies-minor/">Minor in Environmental Studies</a>
-  </ion-item>
+  </ion-item> -->
 
   <p> 
     Want to reach out to The Office of Occupational Safety and Environmental Services? Contact Amanda Radosti at:  

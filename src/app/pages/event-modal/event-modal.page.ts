@@ -27,7 +27,7 @@ export class EventModalPage implements AfterViewInit {
   registered;
 
   constructor(private modalCtrl: ModalController, private storage: Storage, private router: Router, public http: HttpClient, public navCtrl: NavController) { 
-
+    this.parseLink();
   }
 
   ngAfterViewInit() {
@@ -42,6 +42,10 @@ export class EventModalPage implements AfterViewInit {
  
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  parseLink(){
+    console.log(this.eventDescription);
   }
 
   registerForEvent(){

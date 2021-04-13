@@ -15,22 +15,15 @@
 
   <ion-slide>
   <ion-list>
-<!-- 
-  <ion-grid>
-    <ion-row>
-        <ion-col>
-          <img class="center" src="../../assets/icon/icon.png" vertical-align="middle">
-        </ion-col>
-   </ion-row>
-  </ion-grid> -->
+
 
 <!-- signupForm is the label that corresponds with the form in the ts files -->
-  <!-- <form [formGroup]="signupForm" (ngSubmit)="trySignup()"> -->
+
 
     <!-- Collects First Name and stores it into the form, this field is required -->
     <br>
     <ion-item lines="full">
-      <ion-img class="center" src="../../assets/icon/icon.png" vertical-align="middle"></ion-img>
+      <ion-img alt="" class="center" src="../../assets/icon/icon.png" vertical-align="middle"></ion-img>
       <ion-label position="floating">First name</ion-label>
       <ion-input  formControlName="firstName" type="text" required></ion-input>
     </ion-item> 
@@ -114,12 +107,12 @@
       <ion-item type="submit">
         <ion-label>Type of User</ion-label>
         <ion-select formControlName="userType" placeholder="Select One" type="submit" required>
-          <ion-select-option value="Student">Student</ion-select-option>
-          <ion-select-option value="Faculty">Faculty</ion-select-option>
-          <ion-select-option value="Staff">Staff</ion-select-option>
-          <ion-select-option value="Visitor">Visitor</ion-select-option>
-          <ion-select-option value="Community Member">Community Member</ion-select-option>
-          <ion-select-option value="Outreach Partner">Outreach Partner</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Student" value="Student">Student</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Faculty" value="Faculty">Faculty</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Staff" value="Staff">Staff</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Visitor" value="Visitor">Visitor</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Community Member" value="Community Member">Community Member</ion-select-option>
+          <ion-select-option aria-selected="false" aria-controls="Outreach Partner" value="Outreach Partner">Outreach Partner</ion-select-option>
         </ion-select>
       </ion-item>
     
@@ -140,7 +133,7 @@
           <span *ngIf="registrationFailure()">Email is allready in use.</span>        
         </div>
       <!-- <ion-button type="submit" color="danger" expand="block">Sign Up</ion-button> -->
-      <ion-button [disabled]="!signupForm.valid" [color]="isDisabled? 'danger':'primary'" (click)="next()">Next</ion-button>
+      <ion-button aria-label="Next" [disabled]="!signupForm.valid" [color]="isDisabled? 'danger':'primary'" (click)="next()">Next</ion-button>
       <br>
       <br>
         
@@ -199,7 +192,7 @@
 
     <!-- <ion-button [routerLink]="['/login']" expand="block" color="danger">Submit</ion-button> -->
 
-    <ion-button type="submit" color="success" expand="block">Sign Up</ion-button>   
+    <ion-button aria-label="Sign up" type="submit" color="success" expand="block">Sign Up</ion-button>   
 
     </ion-list>                   
 

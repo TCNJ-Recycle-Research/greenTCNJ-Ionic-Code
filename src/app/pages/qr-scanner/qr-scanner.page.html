@@ -23,7 +23,7 @@
 
   <ion-row>
     <ion-col>
-      <ion-button type="submit" color="success" expand="block" (click)="scanBarcode()">Scan Attendance QR Code</ion-button>
+      <ion-button aria-label="Scan Attendance QR Code" type="submit" color="success" expand="block" (click)="scanBarcode()">Scan Attendance QR Code</ion-button>
 
       <div *ngIf="scannedData">
         <p>Scanned Text : </p>
