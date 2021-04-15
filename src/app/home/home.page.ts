@@ -55,11 +55,11 @@ export class HomePage {
         for(var i = 0; i < result.length; i++){
 
           // turns the event date into a date format
-          var tempDate = new Date(result[i]["event_date"]);
+          var tempDate = new Date(result[i]["eventDate"]);
 
           // for loop to show any events if they are scheduled for today
           if((tempDate.getMonth()+1) == (this.today.getMonth()+1) && ((tempDate.getDate()+1) == this.today.getDate()) && (tempDate.getFullYear() == this.today.getFullYear())){
-            this.events.push({name: result[i]["event_name"], description: result[i]["event_description"], date: result[i]["event_date"]});
+            this.events.push({name: result[i]["eventName"], description: result[i]["eventDescription"], date: result[i]["eventDate"]});
           }
         }
 

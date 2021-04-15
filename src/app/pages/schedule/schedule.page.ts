@@ -80,19 +80,19 @@ createStaticNormalDayEvents(events) {
 
   for (var i = 0; i < events.length; i ++) {
 
-      var date = events[i]["event_date"].split("-");
+      var date = events[i]["eventDate"].split("-");
 
       date = new Date(parseInt(date[0]), parseInt(date[1]) - 1, parseInt(date[2]));
 
-      var name = events[i]["event_name"];
-      var description = events[i]["event_description"];
+      var name = events[i]["eventName"];
+      var description = events[i]["eventDescription"];
 
-      var start = events[i]["start_time"].split(":", 2);
+      var start = events[i]["startTime"].split(":", 2);
 
       var startHour = start[0];
       var startMinute = start[1];
 
-      var end = events[i]["end_time"].split(":", 2);
+      var end = events[i]["endTime"].split(":", 2);
 
       var endHour = end[0];
       var endMinute = end[1];
@@ -106,7 +106,7 @@ createStaticNormalDayEvents(events) {
           endTime: endTime,
           desc: description,
           allDay: false,
-          ID: events[i]["event_id"],
+          ID: events[i]["eventID"],
           registered: (events[i]["attended"] != null)
       });
   }

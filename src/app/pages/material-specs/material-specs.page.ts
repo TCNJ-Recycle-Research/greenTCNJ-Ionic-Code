@@ -33,16 +33,16 @@ export class MaterialSpecsPage {
       // if there is no image path set the image path to display not-found.jpg image
       var imgPath = "https://recycle.hpc.tcnj.edu/materialImages/not-found.jpg";
 
-      if(this.materialObj["image_path"] !== null && this.materialObj["image_path"] !== "null"){
+      if(this.materialObj["imagePath"] !== null && this.materialObj["imagePath"] !== "null"){
         
         // else, there is a valid image path so you must concatinate the image name to the full image path
         var str1 = new String('https://recycle.hpc.tcnj.edu/materialImages/'); // db image url
-        var str2 = this.materialObj["image_path"]; // image name 
+        var str2 = this.materialObj["imagePath"]; // image name 
         var imgPath = str1.concat(str2.toString()); //combine the path with the image name 
       }
 
-      this.materialResult.push({name: this.materialObj["material_name"], type: this.materialObj["material_type"], 
-        description: this.materialObj["material_description"], image: imgPath });
+      this.materialResult.push({name: this.materialObj["materialName"], type: this.materialObj["materialType"], 
+        description: this.materialObj["materialDescription"], image: imgPath });
 
       // Let database know a material was viewed
       var obj = {func: "material_viewed"};

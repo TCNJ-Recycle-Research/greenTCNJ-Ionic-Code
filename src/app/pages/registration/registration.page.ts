@@ -121,18 +121,16 @@ export class RegistrationPage implements OnInit{
       var pwd = this.signupForm.value['password'];
       var pwdRepeat = this.signupForm.value['passwordRepeat'];
       var first = this.signupForm.value['firstName'];
-      var last = this.signupForm.value['lastName']; 
+      var last = this.signupForm.value['lastName'];
       var type = this.signupForm.value['userType'];
       // var interests = this.signupForm.value['userInterests'];
 
       console.log(this.temp);
 
-
       var obj = {func: "add_user", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp};
-          console.log("hello?");
 
       this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
-        console.log("here?");
+
           var result = data as any[];
   
           if(result["addSuccess"]){

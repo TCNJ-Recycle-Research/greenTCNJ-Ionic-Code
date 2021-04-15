@@ -41,9 +41,9 @@ export class WhatgoeswherePage {
                 var result = data as any[];
 
                 for(var i = 0; i < result.length; i++){
-                    this.materials.push({id: result[i]["material_id"], name: result[i]["material_name"], type: result[i]["material_type"]});
+                    this.materials.push({id: result[i]["materialID"], name: result[i]["materialName"], type: result[i]["materialType"]});
 
-                    this.materialsBackup[result[i]["material_id"]] = result[i];
+                    this.materialsBackup[result[i]["materialID"]] = result[i];
                 }
 
                 this.searchResults = this.materials;
@@ -60,7 +60,7 @@ export class WhatgoeswherePage {
 
             // want the top 6 materials to be displayed
             for(var i = 0; i < 6; i++){
-                this.popMaterials.push({name: result["top_materials"][i]["material_name"], id: result["top_materials"][i]["material_id"]});
+                this.popMaterials.push({name: result["topMaterials"][i]["materialName"], id: result["topMaterials"][i]["materialID"]});
             }
         });
     }

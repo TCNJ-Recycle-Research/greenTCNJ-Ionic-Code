@@ -78,20 +78,20 @@ checkValidLogin(){
     
               if(result["loginSuccess"]){
                 this.invalidLogin = false;
-                console.log("VALID LOGIN " + result['userInfo']['user_first_name']);
+                console.log("VALID LOGIN " + result['userInfo']['userFirstName']);
     
                 // this is used to store user info within the app, stores userID, Name, type, and email 
-                this.storage.set('userID', result['userInfo']['user_id']); 
-                this.storage.set('userName', result['userInfo']['user_first_name']);
-                this.storage.set('userType', result['userInfo']['user_type']);
-                this.storage.set('userEmail', result["userInfo"]["user_email"]);
+                this.storage.set('userID', result['userInfo']['userID']); 
+                this.storage.set('userName', result['userInfo']['userFirstName']);
+                this.storage.set('userType', result['userInfo']['userType']);
+                this.storage.set('userEmail', result["userInfo"]["userEmail"]);
     
                 // used to set user interests within the app
                 // "recycling_interest", "water_interest", "pollution_interest", "energy_interest"
-                this.storage.set('userRecyclingInterest', result["userInfo"]["recycling_interest"]);
-                this.storage.set('userWaterInterest', result["userInfo"]["water_interest"]);
-                this.storage.set('userPollutionInterest', result["userInfo"]["pollution_interest"]);
-                this.storage.set('userEnergyInterest', result["userInfo"]["energy_interest"]);
+                this.storage.set('userRecyclingInterest', result["userInfo"]["recyclingInterest"]);
+                this.storage.set('userWaterInterest', result["userInfo"]["waterInterest"]);
+                this.storage.set('userPollutionInterest', result["userInfo"]["pollutionInterest"]);
+                this.storage.set('userEnergyInterest', result["userInfo"]["energyInterest"]);
     
                 this.invalidLogin = false;
                 this.correctInput = true;

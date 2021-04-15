@@ -59,8 +59,8 @@ export class RecoverPasswordPage{
 
           } else {
             this.emailSent = true;
-            console.log("email sent");
-            this.emailForm.reset(); 
+            console.log("email sent"); 
+            this.emailForm.reset();
           }
       });
     }

@@ -6,8 +6,6 @@ import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms"
 import { Router, NavigationExtras } from '@angular/router';
 
 
-
-
 @Component({
   selector: 'app-news-modal',
   templateUrl: './news-modal.page.html',

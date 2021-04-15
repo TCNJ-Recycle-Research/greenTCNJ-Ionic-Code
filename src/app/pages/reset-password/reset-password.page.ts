@@ -37,7 +37,7 @@ export class ResetPasswordPage{
 
 
   validatePasswordReset(){
-    console.log("try signup");
+    
     console.log(this.resetForm.value);
 
     // Get the unique selector (basically username) and validator (basically encrypted password) for the password reset that was concatenated 

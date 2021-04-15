@@ -25,13 +25,13 @@ export class CampusresourcesPage{
     
         var result = data as any[];
 
-        console.log(result[0]["resource_name"]);
+        console.log(result[0]["resourceName"]);
  
         for(var i = 0; i < result.length; i++){
 
-        var linkTst = result[i]["resource_link"];
+        var linkTst = result[i]["resourceLink"];
 
-          this.campusResources.push({id: result[i]["resource_id"], name: result[i]["resource_name"], link: linkTst});
+          this.campusResources.push({id: result[i]["resourceID"], name: result[i]["resourceName"], link: linkTst});
         }
 
     });
