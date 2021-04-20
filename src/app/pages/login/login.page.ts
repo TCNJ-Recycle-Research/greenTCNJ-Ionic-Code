@@ -43,8 +43,6 @@ export class LoginPage {
     });
     this.menuCtrl.enable(false);
     this.user = this.userService;
-    // this.testlogin();
-    
   }
 
   
@@ -62,7 +60,6 @@ export class LoginPage {
 
 
 checkValidLogin(){
-  console.log("Reaching this on submit?");
 
   if(!this.loginForm.valid){
     console.log("INVALID");
@@ -78,7 +75,6 @@ checkValidLogin(){
     
               if(result["loginSuccess"]){
                 this.invalidLogin = false;
-                console.log("VALID LOGIN " + result['userInfo']['userFirstName']);
     
                 // this is used to store user info within the app, stores userID, Name, type, and email 
                 this.storage.set('userID', result['userInfo']['userID']); 
@@ -112,9 +108,7 @@ checkValidLogin(){
               }else{
                 // dont move to next page and output error message "Email or password entered was incorrect"
                 console.log("Email or password was incorrect");
-                
-                console.log("huh?" + result[1] + result[1]);    
-
+ 
                 this.invalidLogin = true;
                 this.correctInput = false;
                 this.missingInput = false;
@@ -131,8 +125,6 @@ checkValidLogin(){
 
     const loading = await this.loadingController.create();
     await loading.present();
-
-    console.log(this.loginForm.value);
     
     if(!this.loginForm.valid && this.canLogin){
       console.log("INVALID");
@@ -156,7 +148,7 @@ checkValidLogin(){
 
         this.authService.login(this.loginForm.value).subscribe(
           async (res) => {
-            console.log("What goes first?");
+            
             loading.dismiss();
             this.invalidLogin = false;
             this.navigateToHomePage();
@@ -211,11 +203,7 @@ checkValidLogin(){
 
       // should never resch here   
       }else{
-        console.log("WHAT THE HECK?");
-        console.log(this.loginSuccess() + " " + this.missingValues() + " " + this.wrongCredientals());
-
         loading.dismiss();
-
       }
 
     }
@@ -223,7 +211,6 @@ checkValidLogin(){
   }
 
   navigateToHomePage() {
-    console.log("Working?");
     this.pageLoaded = true;
     this.menuCtrl.enable(true);
     this.router.navigate(['/home'], { replaceUrl: true });

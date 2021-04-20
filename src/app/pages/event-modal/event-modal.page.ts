@@ -52,7 +52,7 @@ export class EventModalPage implements AfterViewInit {
 
     this.storage.get('userID').then((val) => {
 
-      var obj = {func: "add_participant", eventID: this.eventID, userID: val, attendance: 0};
+      var obj = {func: "add_participant", userID: val, eventID: this.eventID, attendance: 0};
     
       this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
           
@@ -60,7 +60,6 @@ export class EventModalPage implements AfterViewInit {
         
         if(result["addSuccess"]){
           this.eventObj.registered = this.registered = true;
-          console.log("registered boo yah");
         } 
 
       });

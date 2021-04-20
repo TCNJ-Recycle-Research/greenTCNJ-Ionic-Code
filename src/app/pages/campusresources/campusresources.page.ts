@@ -24,14 +24,12 @@ export class CampusresourcesPage{
     this.http.post("https://recycle.hpc.tcnj.edu/php/resources-handler.php", JSON.stringify(obj)).subscribe(data => {
     
         var result = data as any[];
-
-        console.log(result[0]["resourceName"]);
  
         for(var i = 0; i < result.length; i++){
 
-        var linkTst = result[i]["resourceLink"];
+          // var linkTst = result[i]["resourceLink"];
 
-          this.campusResources.push({id: result[i]["resourceID"], name: result[i]["resourceName"], link: linkTst});
+          this.campusResources.push({id: result[i]["resourceID"], name: result[i]["resourceName"], link: result[i]["resourceLink"]});
         }
 
     });

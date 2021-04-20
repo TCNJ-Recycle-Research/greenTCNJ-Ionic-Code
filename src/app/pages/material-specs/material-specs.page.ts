@@ -45,7 +45,7 @@ export class MaterialSpecsPage {
         description: this.materialObj["materialDescription"], image: imgPath });
 
       // Let database know a material was viewed
-      var obj = {func: "material_viewed"};
+      var obj = {func: "material_viewed", materialID: this.materialObj["materialID"]};
 
       this.http.post("https://recycle.hpc.tcnj.edu/php/materials-handler.php", JSON.stringify(obj)).subscribe(data => {});
     }

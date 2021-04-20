@@ -36,12 +36,9 @@ export class NewsPage implements OnInit {
         var result = data as any[];
 
         for(var i = 0; i < result.length; i++){
-          // $articleID, $title, $author, $text
-            this.news.push({articleID: result[i]["articleID"], title: result[i]["articleTitle"], author: result[i]["articleAuthor"], text: result[i]["articleText"], datePublished: result[i]["publishDate"]});
+          this.news.push({articleID: result[i]["articleID"], title: result[i]["articleTitle"], author: result[i]["articleAuthor"], 
+                          text: result[i]["articleText"], datePublished: result[i]["publishDate"]});
         }
-
-        
-        // this.searchResults = this.news;
     });
 
   }

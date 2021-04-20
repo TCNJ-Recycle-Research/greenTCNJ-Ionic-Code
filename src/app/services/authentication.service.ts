@@ -6,12 +6,17 @@ import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
+import { IonicStorageModule } from '@ionic/storage';
+import { NgModule } from '@angular/core';
+
  
 const TOKEN_KEY = 'my-token';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -19,6 +24,7 @@ export class AuthenticationService {
  
   constructor(private http: HttpClient) {
     this.loadToken();
+
   }
  
   async loadToken() {
@@ -35,7 +41,7 @@ export class AuthenticationService {
   public login(credentials: {email, password}): Observable<any> {
     var obj = {func: "try_login", email: credentials.email, password: credentials.password};
     return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).pipe(
-    // token =   data["userInfo"]["user_id"]
+
     map((data: any) => data.token),
 
       switchMap(token => {
@@ -48,13 +54,6 @@ export class AuthenticationService {
     )
   }
 
-  // public userInfo(email){
-  //   var obj = {func: "get_user", email: email};
-  //   this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
-  //     var result = data as any[];
-
-  //   }
-  // }
  
   public logout(): Promise<void> {
     this.isAuthenticated.next(false);
