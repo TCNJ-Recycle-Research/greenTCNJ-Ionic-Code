@@ -47,8 +47,6 @@ export class SuggestmaterialPage{
       }
 
   submitWord(){
-    console.log("try submit");
-    console.log(this.wordForm.value);
 
     if(!this.wordForm.valid){
       console.log("INVALID");
@@ -64,16 +62,12 @@ export class SuggestmaterialPage{
       
           var result = data as any[];
 
-          console.log(result);
-
           if(result['missingInput']){
             // output to user it succeeded and move to next page
-            console.log("missing Input");
             this.wordSent = false;
 
           } else {
             this.wordSent = true;
-            console.log("word submitted");
             this.wordForm.reset(); 
           }
       });

@@ -14,18 +14,21 @@ import { AnonymousSubject } from 'rxjs/internal/Subject';
 })
 export class MyRegisteredEventsPage{
 
+  // arrays to hold all events, your registered events, registered past events, and registered future events, 
   eventList = [];
   myEvents = [];
   pastEvents = [];
   futureEvents = [];
 
+  // boolean variables for checks to display no events message on the HTML file 
   noFutureEvents: any;
   noPastEvents: any;
   noEvents: any;
-
-
-  today = new Date(Date.now());
   gotAllEvents: any;
+
+  // date to sort events into past/future
+  today = new Date(Date.now());
+
   type: string; // used to initialize tab to the view all page 
 
   constructor(private router: Router, private route: ActivatedRoute, public http: HttpClient,private alertCtrl: AlertController,
@@ -36,9 +39,7 @@ export class MyRegisteredEventsPage{
           this.eventList = this.router.getCurrentNavigation().extras.state.events;
           for(var i = 0; i < this.eventList.length; i++){
             this.registeredForEvent(i);
-            //console.log("registered?  " + this.eventList[i].registered);
           }
-          //console.log("Event List: " + this.eventList[0].title); // debug print statement
         }
     });
 
@@ -49,31 +50,21 @@ export class MyRegisteredEventsPage{
   registeredForEvent(num){
     
     if(this.eventList[num].registered){
-      //console.log("registered: " + this.eventList[num].title);
       this.myEvents.push(this.eventList[num]);
-    }else{
-      //console.log("NOT registered: " + this.eventList[num].title);
     }
 
     if(num == (this.eventList.length - 1)){
-      console.log("final registered length: " + this.myEvents.length);
       this.gotAllEvents = true;
 
       this.myEvents = this.myEvents.sort((a, b) => b.date - a.date);
-      console.log(this.myEvents);
       
       this.getAllEvents();
       this.sortEvents();
-      // this.getPastEvents();
     } 
 
   }
 
   getAllEvents(){
-    for(var i = 0; i < this.myEvents.length; i++){
-      console.log(this.myEvents[i].title);
-    }
-
     return this.myEvents;
   }
 
@@ -83,16 +74,15 @@ export class MyRegisteredEventsPage{
       // turns the event date into a date format
       var tempDate = new Date(this.myEvents[i].startTime);
 
-      // for loop to show any events if they are scheduled for today
-      if(tempDate > this.today){
+      // if statement to sort through events into past and future arrays 
+      if(tempDate >= this.today){
         this.futureEvents.push(this.myEvents[i]);
       }else{
-        console.log( tempDate.getMonth() + " " + this.today.getMonth());
         this.pastEvents.unshift(this.myEvents[i]);
       }
     }
-    console.log("future length: " + this.futureEvents.length);
     
+    // checks to see if any event arrays are empty by checking if length  == 0 to display no events message
     if(this.myEvents.length == 0){
       this.noEvents = "No registered events.";
     }else{
@@ -114,6 +104,7 @@ export class MyRegisteredEventsPage{
   }
 
 
+  // opens up event-modal for the selected event, called the same way as it is being called on the schedule page
   async onEventSelected(event) {
 
     let date = formatDate(event.startTime, 'MMM d, yyyy', this.locale);

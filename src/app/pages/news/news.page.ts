@@ -45,13 +45,7 @@ export class NewsPage implements OnInit {
 
   ionViewWillEnter() {
     setTimeout(() => {
-      // this.data = {
-      //   'heading': 'Article Title',
-      //   'para1': 'Lorem ipsum dolor sit amet, consectetur',
-      //   'para2': 'date uploaded.'
-      // };
       this.news;
-      console.log(this.news);
     }, 5000);
   }
 

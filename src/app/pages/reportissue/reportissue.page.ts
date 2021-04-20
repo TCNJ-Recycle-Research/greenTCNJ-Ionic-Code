@@ -33,7 +33,6 @@ export class ReportissuePage implements OnInit {
     });
 
     storage.get('userEmail').then((val) => {
-      console.log('Your email is', val);
       this.usrEmail = val;
     });
 
@@ -50,8 +49,6 @@ export class ReportissuePage implements OnInit {
       }
 
   submitWord(){
-    console.log("try submit");
-    console.log(this.wordForm.value);
 
     if(!this.wordForm.valid){
       console.log("INVALID");
@@ -66,8 +63,6 @@ export class ReportissuePage implements OnInit {
       this.http.post("https://recycle.hpc.tcnj.edu/php/issues-handler.php", JSON.stringify(obj)).subscribe(data => {
       
           var result = data as any[];
-
-          console.log(result);
 
           if(result['missingInput']){
             // output to user it succeeded and move to next page

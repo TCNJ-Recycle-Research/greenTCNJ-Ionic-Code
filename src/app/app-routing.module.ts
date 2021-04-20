@@ -86,10 +86,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
   },
   {
-    path: 'selectinterests',
-    loadChildren: () => import('./pages/selectinterests/selectinterests.module').then( m => m.SelectinterestsPageModule)
-  },
-  {
     path: 'suggestmaterial',
     loadChildren: () => import('./pages/suggestmaterial/suggestmaterial.module').then( m => m.SuggestmaterialPageModule)
   },

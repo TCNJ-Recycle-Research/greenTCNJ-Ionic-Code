@@ -63,19 +63,7 @@
   </calendar>
 
   <ng-template #foo let-view="view" let-row="row" let-col="col">
-    {{view.dates[row*7+col].label}}
-    <!--
-      <div [class.with-event]="view.dates[row*7+col].events.length">
-      
-      <div class="indicator-container">
-        <div class="event-indicator" *ngFor="let e of view.dates[row*7+col].events"></div>
-        </div>
-      </div>
-
-      
-      
-    -->
-    
+    {{view.dates[row*7+col].label}}    
   </ng-template>
 
   <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
@@ -93,16 +81,7 @@
       </ion-item>
     </ion-list>
   </ng-template>
-  
-  <!-- <ion-footer class="ion-no-border">
-    <ion-toolbar>
-      <ion-item>
-        <ion-text>Looking for a material that is not on our list? 
-          <a [routerLink]="['/suggestmaterial']" class="small-text">Submit a material here!</a>
-        </ion-text>
-      </ion-item>
-    </ion-toolbar>
-  </ion-footer> -->
+
 
 </ion-content>
 

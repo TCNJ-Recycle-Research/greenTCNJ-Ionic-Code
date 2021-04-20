@@ -64,8 +64,6 @@ export class ResetPasswordPage{
           if(result['missingInput']){
             // output to user it succeeded and move to next page
             console.log("missing Input");
-            // console.log("LOGIN SUCCESS");
-            // // this.navigateToHomePage();
           } else {
             // dont move to next page and output error message "Email or password entered was incorrect"
             console.log("email sent");

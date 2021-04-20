@@ -9,26 +9,27 @@ import { Router, NavigationExtras  } from '@angular/router';
 })
 export class CampusresourcesPage{
 
+  // array thet holds an id number, the link name and the actual link specified by admins in the web portal
   campusResources: {id: any, name: any, link: any}[] = [];
 
   constructor(public http: HttpClient, private router: Router) {
+    //loads the getAllResources function in the constructor
     this.getAllResources();
    }
 
-  //  (`resource_id`, `resource_name`, `resource_link`)
-
-
+   // function to call php function to get list of resources
   getAllResources(){
+
+    // php function call, does not require passing any parameters
     var obj = {func: "get_all_resources"};
-            
+    
+    // calling the function in the recources-handpler.php script 
     this.http.post("https://recycle.hpc.tcnj.edu/php/resources-handler.php", JSON.stringify(obj)).subscribe(data => {
     
         var result = data as any[];
- 
+
+        // pushes campus resources into the created array
         for(var i = 0; i < result.length; i++){
-
-          // var linkTst = result[i]["resourceLink"];
-
           this.campusResources.push({id: result[i]["resourceID"], name: result[i]["resourceName"], link: result[i]["resourceLink"]});
         }
 

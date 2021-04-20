@@ -19,15 +19,18 @@ export class EventModalPage implements AfterViewInit {
   
   modalReady = false;
   
+  // list of elements passed from the schedule page
   eventObj;
   eventID;
   eventName;
   eventTime;
   eventDescription;
+
+  // boolean value used on html to display register or unregister button
   registered;
 
   constructor(private modalCtrl: ModalController, private storage: Storage, private router: Router, public http: HttpClient, public navCtrl: NavController) { 
-    this.parseLink();
+
   }
 
   ngAfterViewInit() {
@@ -40,18 +43,19 @@ export class EventModalPage implements AfterViewInit {
     }, 0);
   }
  
+  // function attached to the close button to close the modal
   close() {
     this.modalCtrl.dismiss();
   }
 
-  parseLink(){
-    console.log(this.eventDescription);
-  }
-
+  // function to register for an event calling the php script
   registerForEvent(){
 
     this.storage.get('userID').then((val) => {
 
+      //need to pass the userID eventID, and attendance Value
+      // attendance valaue is initially set to null, 0 means the user is registered but not attendin, and 1 is for registered and attending
+      //thus we are hardcoding it to 0 and it will be updated once the attendance is set
       var obj = {func: "add_participant", userID: val, eventID: this.eventID, attendance: 0};
     
       this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
@@ -68,10 +72,12 @@ export class EventModalPage implements AfterViewInit {
     
   }
 
+  // function to unregister for an event calling the php script
   unregisterForEvent(){
 
     this.storage.get('userID').then((val) => {
 
+      //need to pass the eventID, and userID to the php function 
       var obj = {func: "delete_participant", eventID: this.eventID, userID: val};
     
       this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
@@ -80,7 +86,6 @@ export class EventModalPage implements AfterViewInit {
 
         if(result["deleteSuccess"]){
           this.eventObj.registered = this.registered = false;
-          console.log("we out");
         } 
 
       });

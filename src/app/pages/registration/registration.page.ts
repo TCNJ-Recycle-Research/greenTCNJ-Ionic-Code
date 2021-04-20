@@ -105,9 +105,6 @@ export class RegistrationPage implements OnInit{
 
   trySignup(){
 
-    console.log("try signup");
-    console.log(this.signupForm.value);
-
     if(!this.signupForm.valid){
       console.log("INVALID");
       this.buttonDisabled = true;
@@ -123,9 +120,6 @@ export class RegistrationPage implements OnInit{
       var first = this.signupForm.value['firstName'];
       var last = this.signupForm.value['lastName'];
       var type = this.signupForm.value['userType'];
-      // var interests = this.signupForm.value['userInterests'];
-
-      console.log(this.temp);
 
       var obj = {func: "add_user", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp};
 
@@ -169,7 +163,6 @@ export class RegistrationPage implements OnInit{
     }else{
       this.temp.recycling = 0;
     } 
-    console.log(this.temp.recycling);
   }
 
   setWaterInterest(x){
@@ -217,7 +210,6 @@ formInputIsRequired(formInput: string) {
 }
 
 next() {
-  console.log("Working?");
   if(this.signupForm.valid){
     this.slides.slideNext();
   }
@@ -233,31 +225,22 @@ fillForm(){
 }
 
 addValue(e): void {
-  	console.log(e.currentTarget.checked);	
-    console.log(e.currentTarget.name);
-    //console.log(this.temp.recycling);
 
     if(e.currentTarget.name == "ion-cb-0"){
-      console.log("Recycling");
       this.setRecycleInterest(e.currentTarget.checked);
     }
 
     if(e.currentTarget.name == "ion-cb-1"){
-      console.log("Water");
       this.setWaterInterest(e.currentTarget.checked);
     }
 
     if(e.currentTarget.name == "ion-cb-2"){
-      console.log("Pollution");
       this.setPollutionInterest(e.currentTarget.checked);
     }
 
     if(e.currentTarget.name == "ion-cb-3"){
-      console.log("Energy");
       this.setEnergyInterest(e.currentTarget.checked);
     }
-
-    
 }
 
 }

@@ -5,12 +5,10 @@ import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms"
 import { Router, NavigationExtras } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from './../../services/authentication.service';
-import { User } from '../../models/user';
 import {  MenuController } from '@ionic/angular';
 
 import { Storage } from '@ionic/storage';
 
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,21 +18,23 @@ import { UserService } from '../../services/user.service';
 
 export class LoginPage {
   
+  // form input 
   emailInput: string = "";
   passwordInput: string = "";
+  
+  // form variables
   loginForm: FormGroup;
   myControl: FormControl;
+
+  // boolean values for login checks 
   invalidLogin: boolean = false;
   pageLoaded: boolean = false;
-  user: any;
-
-
   wrongInput: boolean = false;
   correctInput: boolean = false;
   missingInput: boolean = false;
   canLogin: boolean = false;
 
-  constructor(private  userService: UserService, private storage: Storage, public menuCtrl: MenuController, private alertController: AlertController, private authService: AuthenticationService, private router: Router, public http: HttpClient, public navCtrl: NavController, public formBuilder: FormBuilder, private loadingController: LoadingController) {
+  constructor(private storage: Storage, public menuCtrl: MenuController, private alertController: AlertController, private authService: AuthenticationService, private router: Router, public http: HttpClient, public navCtrl: NavController, public formBuilder: FormBuilder, private loadingController: LoadingController) {
     this.loginForm = formBuilder.group({
         // Require validators for the input fields so we can quickly tell them if their input is valid, the patten string is what characters
         // are allowed in the field and for email it makes sure there is a @ character and a domain field like .com
@@ -42,7 +42,6 @@ export class LoginPage {
         password: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
     });
     this.menuCtrl.enable(false);
-    this.user = this.userService;
   }
 
   
@@ -83,7 +82,6 @@ checkValidLogin(){
                 this.storage.set('userEmail', result["userInfo"]["userEmail"]);
     
                 // used to set user interests within the app
-                // "recycling_interest", "water_interest", "pollution_interest", "energy_interest"
                 this.storage.set('userRecyclingInterest', result["userInfo"]["recyclingInterest"]);
                 this.storage.set('userWaterInterest', result["userInfo"]["waterInterest"]);
                 this.storage.set('userPollutionInterest', result["userInfo"]["pollutionInterest"]);
@@ -97,7 +95,6 @@ checkValidLogin(){
                 
               }else if(result["missingInputs"]){
                 // output error message of missing inputs
-                
                 console.log("Missing Input");
 
                 this.invalidLogin = true;
@@ -117,10 +114,11 @@ checkValidLogin(){
           });
 
           
-  }
+    }
   this.canLogin  = true;
-}
+  }
 
+  //
   async login(){
 
     const loading = await this.loadingController.create();
@@ -210,6 +208,7 @@ checkValidLogin(){
      
   }
 
+  // function to route to the home page after logging in 
   navigateToHomePage() {
     this.pageLoaded = true;
     this.menuCtrl.enable(true);
@@ -218,6 +217,7 @@ checkValidLogin(){
   }
 
 
+  // used to add * to email and it is removed once something is entered
   formInputIsRequired(formInput: string) {
     if (this.loginForm.controls[formInput]) {
       if (this.loginForm.controls[formInput].hasError('required')) {
@@ -227,6 +227,7 @@ checkValidLogin(){
     return false;
   }
 
+  // boolean return values
   loginFailure(){
 
     return this.invalidLogin;

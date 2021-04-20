@@ -16,27 +16,18 @@
   <ion-segment color="primary" [(ngModel)]="type" scrollable>
     <ion-segment-button value="all" checked>
       <ion-label>All Items</ion-label>
-      <!-- <ion-icon name="cash"></ion-icon> -->
     </ion-segment-button>
     <ion-segment-button value="popular">
       <ion-label>Popular Searches</ion-label>
-      <!-- <ion-icon name="log-out"></ion-icon> -->
     </ion-segment-button>
   </ion-segment>
 
   <div [ngSwitch]="type">
     <ion-list *ngSwitchCase="'all'">
 
-      <!-- <ion-list-header>
-        <ion-title> 
-          Not sure where something goes? 
-        </ion-title>
-      </ion-list-header> -->
-
       <ion-item>
         <ion-thumbnail slot="start">
           <img alt="" src = "../../assets/RecyclingRoscoeSquare.png">
-          <!-- <img src="../../assets/icon/TCNJ SPIRIT HEAD FULL COLOR RGB.png"> -->
         </ion-thumbnail>
         <ion-label class="ion-text-wrap"><h1><strong>What Goes Where?</strong></h1> Ask Roscoe!</ion-label>
       </ion-item>
@@ -48,7 +39,6 @@
       </ion-searchbar>
     
       <ion-list id="search-results">
-        <!-- <ion-list-header>Popular Searches</ion-list-header> -->
         <ion-item *ngFor="let material of searchResults">
           <ion-button aria-label="material.name" color="success" size="medium" [innerHTML]="material.name" [attr.data-material-id]="material.id" (click)="openDetailsWithState($event)">
           </ion-button>
@@ -62,7 +52,6 @@
       <ion-item>
         <ion-thumbnail slot="start">
           <img alt="" src = "../../assets/RecyclingRoscoeSquare.png">
-          <!-- <img src="../../assets/icon/TCNJ SPIRIT HEAD FULL COLOR RGB.png"> -->
         </ion-thumbnail>
         <ion-label class="ion-text-wrap"><h1><strong>Top Materials</strong></h1>These are commonly searched items.</ion-label>
       </ion-item>
