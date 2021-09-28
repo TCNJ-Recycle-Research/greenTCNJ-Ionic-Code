@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+import { Storage } from '@capacitor/storage';
 import { IonicStorageModule } from '@ionic/storage';
 import { NgModule } from '@angular/core';
 

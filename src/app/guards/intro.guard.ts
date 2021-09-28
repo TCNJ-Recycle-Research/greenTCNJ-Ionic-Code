@@ -3,8 +3,7 @@ import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot
 import { Observable } from 'rxjs';
 
 export const INTRO_KEY = 'intro-seen';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins; 
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'

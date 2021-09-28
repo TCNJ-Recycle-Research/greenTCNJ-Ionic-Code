@@ -2,10 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage';
 import {  MenuController } from '@ionic/angular';
 
-const { Storage } = Plugins;
 
 // this page is the introductory page that loads when users initially open the app 
 // - if you want to seeit/test it you can go to the urn or open the ionic serve on an incognito tab
