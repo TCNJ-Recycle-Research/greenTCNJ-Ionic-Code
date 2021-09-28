@@ -30,6 +30,9 @@ export class IntroPage implements OnInit {
  
   // sets a key meaning that the app user is no longer new to the app so they will not see this page again once they have seen it yet
   async start() {
+
+    Storage.migrate();
+
     await Storage.set({key: INTRO_KEY, value: 'true'});
 
     // reditrects to the start page and clears url
