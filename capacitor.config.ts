@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   "appId": "io.ionic.starter",
-  "appName": "ResearchRecycle",
+  "appName": "GreenTCNJ",
   "bundledWebRuntime": false,
   "webDir": "www",
   "plugins": {
