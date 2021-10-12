@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 
 const config: CapacitorConfig = {
-  "appId": "io.ionic.starter",
+  "appId": "io.ionic.greentcnj",
   "appName": "GreenTCNJ",
   "bundledWebRuntime": false,
   "webDir": "www",
