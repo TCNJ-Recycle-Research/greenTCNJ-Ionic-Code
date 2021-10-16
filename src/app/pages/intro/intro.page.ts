@@ -33,6 +33,8 @@ export class IntroPage implements OnInit {
 
     await Storage.set({key: INTRO_KEY, value: 'true'});
 
+    Storage.migrate();
+
     // reditrects to the start page and clears url
     this.router.navigateByUrl('/start', { replaceUrl:true });
   }
