@@ -40,7 +40,7 @@
     "cordova-plugin-nativestorage": "^2.3.2",
     "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
     "cordova-plugin-splashscreen": "^6.0.0",
-    "cordova-sqlite-storage": "^5.1.0",
+    "cordova-sqlite-storage": "^6.0.0",
     "i18n": "^0.13.3",
     "ionic2-calendar": "^0.6.6",
     "phonegap-plugin-mobile-accessibility": "^1.0.5",
