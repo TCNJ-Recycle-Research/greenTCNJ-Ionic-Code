@@ -10,6 +10,8 @@ import { NgModule } from '@angular/core';
 
  
 const TOKEN_KEY = 'my-token';
+//const ACCESS_TOKEN_KEY = 'my-access-token';
+//const REFRESH_TOKEN_KEY = 'my-refresh-token';
 
 @Injectable({
   providedIn: 'root'

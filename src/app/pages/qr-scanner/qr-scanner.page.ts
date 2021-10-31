@@ -22,30 +22,42 @@ export class QrScannerPage {
   inputData: any;
   usrID: any;
 
+  resultHTML = null;
+  scanActive = false;
+
   constructor(public http: HttpClient,  private storage: Storage) {
-    //this.scanBarcode();
     storage.get('userID').then((val) => {
       this.usrID = val;
     });
-    this.scanBarcode();
+    //this.scanBarcode();
+  }
+
+  prepare(){
+    BarcodeScanner.prepare();
+  }
+
+  destroy(){
+    BarcodeScanner.stopScan();
+    this.scanActive = false;
   }
 
   async grantPerms(){
-    const status = await BarcodeScanner.checkPermission({ force: false})
+    const status = await BarcodeScanner.checkPermission({force: false});
 
     if (status.granted){
       //granted permission to use camera
       return true;
     }
 
-    if (status.denied){
-      //denied permission to use camera
-      return false;
-    }
-
-    if (status.asked) {
-      // system requested the user for permission during this call
-      // only possible when force set to true
+    if (status.denied) {
+      // the user denied permission for good
+      // redirect user to app settings if they want to grant it anyway
+      const c = confirm(
+        'If you want to grant permission for using your camera, enable it in the app settings.',
+      );
+      if (c) {
+        BarcodeScanner.openAppSettings();
+      }
     }
   
     if (status.neverAsked) {
@@ -71,11 +83,6 @@ export class QrScannerPage {
     // so request it
     const statusRequest = await BarcodeScanner.checkPermission({ force: true });
   
-    if (statusRequest.asked) {
-      // system requested the user for permission during this call
-      // only possible when force set to true
-    }
-  
     if (statusRequest.granted) {
       // the user did grant the permission now
       return true;
@@ -85,39 +92,32 @@ export class QrScannerPage {
     return false;
   }
 
-  prepare(){
-    BarcodeScanner.prepare();
-  }
-
   async scanBarcode(){
     if(this.grantPerms()){
-      BarcodeScanner.hideBackground();
+      this.scanActive = true;
       const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });
-  
       if (result.hasContent){
-        console.log("here we go!");
+        this.resultHTML = result.content;
         var obj = {func: "add_participant", eventID: result.content, userID: this.usrID, attendance: 1};
-        console.log("About to send!")
         this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
-          var result = data as any[];
-          if(result['missingInput']){
-            console.log("missing Input");
-  
-          } else if (result["addSuccess"]) {
-            console.log("correct inputs");
-          }
-          else {
-            console.log(result["addSuccess"]);
-            console.log("hiiiiii");
-          }
-      
+          var response = data as any[];
         });
-        console.log("sent?");
+        if(confirm("Your code was read successfully! Did you want to scan again?")){
+          this.scanBarcode();
+        }
+        else{
+          this.scanActive = false;
+        }
       }
       else {
         console.log("Nothing read from QR Code");
+        if(confirm("Sorry, nothing was read from that code! Try again?")){
+          this.scanBarcode();
+        }
+        else{
+          this.scanActive = false;
+        }
       }
-      this.scanBarcode();
     }
     else{
       const c = confirm(
@@ -136,28 +136,5 @@ export class QrScannerPage {
       this.scanBarcode();
     }
   }
-
-/*
-  scanBarcode() {
-
-    BarcodeScanner.startScan().then((barcodeData) => {
-      
-      console.log('Barcode data', barcodeData);
-
-      this.scannedData = barcodeData;
-      
-      var obj = {func: "add_participant", eventID: 1, userID: this.usrID, attendance: 1};
-    
-      this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
-          
-        var result = data as any[];
-      
-      });
-
-    }).catch(err => {
-      console.log('Error occured: ' + err);
-    });
-  }
-  */
 
 }
