@@ -22,7 +22,6 @@ export class QrScannerPage {
   inputData: any;
   usrID: any;
 
-  resultHTML = null;
   scanActive = false;
 
   constructor(public http: HttpClient,  private storage: Storage) {
@@ -97,7 +96,6 @@ export class QrScannerPage {
       this.scanActive = true;
       const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });
       if (result.hasContent){
-        this.resultHTML = result.content;
         var obj = {func: "add_participant", eventID: result.content, userID: this.usrID, attendance: 1};
         this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
           var response = data as any[];
@@ -128,13 +126,4 @@ export class QrScannerPage {
       }
     }
   }
-
-  askUser(){
-    const c = confirm('Do you want to scan a barcode?');
-
-    if (c){
-      this.scanBarcode();
-    }
-  }
-
 }
