@@ -4,14 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 
-import { Storage } from '@capacitor/storage';
-import { IonicStorageModule } from '@ionic/storage';
+//import { Storage } from '@capacitor/storage';
+import { Storage } from '@ionic/storage';
 import { NgModule } from '@angular/core';
 
- 
-const TOKEN_KEY = 'my-token';
-//const ACCESS_TOKEN_KEY = 'my-access-token';
-//const REFRESH_TOKEN_KEY = 'my-refresh-token';
 
 @Injectable({
   providedIn: 'root'
@@ -21,36 +17,95 @@ const TOKEN_KEY = 'my-token';
 export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  token = '12345';
+  //token = '';
  
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: Storage) {
     this.loadToken();
 
   }
  
-  async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });    
-    if (token && token.value) {
-      console.log('set token: ', token.value);
-      this.token = token.value;
-      this.isAuthenticated.next(true);
-    } else {
+   loadToken() {
+    const token = this.loadTokenStorage();
+    console.log("HERE IS TOKEN");
+    console.log(token);
+    if(token){
+      console.log("TOKEN FOUND");
+      console.log("SENDING TOKEN FOR VALIDATION");
+      const result = this.validateToken(token);
+      console.log(result);
+      console.log("TOKEN SENT FOR VALIDATION");
+      var JWTValid = true;
+ 
+      if (JWTValid) {
+        console.log('TOKEN LOADED & VALID');
+        //this.token = token;
+        this.isAuthenticated.next(true);
+      } 
+      else {
+        console.log("TOKEN INVALID");
+        this.isAuthenticated.next(false);
+      }
+      
+    }
+    else{
+      console.log("NO TOKEN");
       this.isAuthenticated.next(false);
     }
   }
+
+  async loadTokenStorage(){
+    console.log("loading token from func!");
+    const token = await this.storage.get('token');
+    console.log(token);
+    return token;
+  }
+
+  validateToken(token): String{
+    var obj = {func: "jwt_login", token: token};
+    this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
+                
+      var result = data as any[];
+      console.log("validating token.......");
+      console.log(result);
+      console.log(result["loginSuccess"]);
+      console.log(result["token"]);
+      return result["token"];
+    
+    });
+    return "";
+  }
+
+  /*
+  async validateToken(token){
+    var obj = {func: "jwt_login", token: token};
+    this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
+                
+      var result = data as any[];
+      console.log("validating token.......");
+      console.log(result);
+      console.log(result["loginSuccess"]);
+      console.log(result["token"]);
+      return result["token"];
+    
+    });
+
+  } */
  
   public login(credentials: {email, password}): Observable<any> {
     var obj = {func: "try_login", email: credentials.email, password: credentials.password};
     return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).pipe(
 
-    map((data: any) => data.token),
+      map((data: any) => data),
 
-      switchMap(token => {
-        return from(Storage.set({key: TOKEN_KEY, value: token}));
+      switchMap(data => {
+        console.log("SETTING TOKEN");
+        //console.log(data["token"]);
+        return from(this.storage.set('token', data["token"]));
       }),
+      
       tap(_ => {
         this.isAuthenticated.next(true);
-        
+          
       })
     )
   }
@@ -58,6 +113,7 @@ export class AuthenticationService {
  
   public logout(): Promise<void> {
     this.isAuthenticated.next(false);
-    return Storage.remove({key: TOKEN_KEY});
+    console.log("DELETING TOKEN");
+    return this.storage.remove('token');
   }
 }

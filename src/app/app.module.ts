@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import {IonicStorageModule} from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
   imports: [BrowserModule, 
     IonicModule.forRoot(),
     // NativeStorageModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule, 
     HttpClientModule,
   ],

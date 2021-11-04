@@ -5,8 +5,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { CustomValidationService } from 'src/app/services/custom-validation.service';
 import { IonSlides } from '@ionic/angular';
 
-//import { Storage } from '@capacitor/storage';
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.page.html',
