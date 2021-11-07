@@ -17,34 +17,30 @@ import { NgModule } from '@angular/core';
 export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  //token = '';
  
   constructor(private http: HttpClient, private storage: Storage) {
     this.loadToken();
 
   }
  
-   loadToken() {
-    const token = this.loadTokenStorage();
-    console.log("HERE IS TOKEN");
-    console.log(token);
-    if(token){
-      console.log("TOKEN FOUND");
-      console.log("SENDING TOKEN FOR VALIDATION");
-      const result = this.validateToken(token);
-      console.log(result);
-      console.log("TOKEN SENT FOR VALIDATION");
-      var JWTValid = true;
- 
-      if (JWTValid) {
-        console.log('TOKEN LOADED & VALID');
-        //this.token = token;
-        this.isAuthenticated.next(true);
-      } 
-      else {
-        console.log("TOKEN INVALID");
-        this.isAuthenticated.next(false);
-      }
+  async loadToken() {
+    const storedToken = await this.storage.get('token');
+    if(storedToken){
+      this.validateToken(storedToken).then(data => {
+        var result = data as any[];
+
+        if (result["loginSuccess"]) {
+          console.log("TOKEN VALID");
+          this.storage.set('token', result["token"]);
+          this.updateStorage(result["userInfo"][0]);
+          this.isAuthenticated.next(true);
+        } 
+        else {
+          console.log("TOKEN INVALID");
+          this.isAuthenticated.next(false);
+        }
+
+      });
       
     }
     else{
@@ -53,43 +49,26 @@ export class AuthenticationService {
     }
   }
 
-  async loadTokenStorage(){
-    console.log("loading token from func!");
-    const token = await this.storage.get('token');
-    console.log(token);
-    return token;
+  private validateToken(token): Promise<any>{
+    var obj = {func: "jwt_login", token: token};
+    return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).toPromise()
+      .then(data => data)
+      .catch(msg => console.log('Error: ' + msg.status + ' ' + msg.statusText))
   }
 
-  validateToken(token): String{
-    var obj = {func: "jwt_login", token: token};
-    this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
-                
-      var result = data as any[];
-      console.log("validating token.......");
-      console.log(result);
-      console.log(result["loginSuccess"]);
-      console.log(result["token"]);
-      return result["token"];
-    
-    });
-    return "";
+  private updateStorage(userData): void{
+    // this is used to store user info within the app, stores userID, Name, type, and email 
+    this.storage.set('userID', userData['userID']); 
+    this.storage.set('userName', userData['userFirstName']);
+    this.storage.set('userType', userData['userType']);
+    this.storage.set('userEmail', userData["userEmail"]);
+
+    // used to set user interests within the app
+    this.storage.set('userRecyclingInterest', userData["recyclingInterest"]);
+    this.storage.set('userWaterInterest', userData["waterInterest"]);
+    this.storage.set('userPollutionInterest', userData["pollutionInterest"]);
+    this.storage.set('userEnergyInterest', userData["energyInterest"]);
   }
-
-  /*
-  async validateToken(token){
-    var obj = {func: "jwt_login", token: token};
-    this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
-                
-      var result = data as any[];
-      console.log("validating token.......");
-      console.log(result);
-      console.log(result["loginSuccess"]);
-      console.log(result["token"]);
-      return result["token"];
-    
-    });
-
-  } */
  
   public login(credentials: {email, password}): Observable<any> {
     var obj = {func: "try_login", email: credentials.email, password: credentials.password};
@@ -98,8 +77,6 @@ export class AuthenticationService {
       map((data: any) => data),
 
       switchMap(data => {
-        console.log("SETTING TOKEN");
-        //console.log(data["token"]);
         return from(this.storage.set('token', data["token"]));
       }),
       
@@ -113,7 +90,6 @@ export class AuthenticationService {
  
   public logout(): Promise<void> {
     this.isAuthenticated.next(false);
-    console.log("DELETING TOKEN");
     return this.storage.remove('token');
   }
 }
