@@ -12,17 +12,28 @@
 </ion-header>
 
 <ion-content [style.--background]="scanActive ? '#00000000' : '#fff'">
-  <p class="ion-text-start" [hidden]="scanActive">
-    Here you can use your phone's camera to scan a GreenTCNJ QR code provided by an event organizer to let them know you attended. Make sure you give the app permissions to use your camera!
-  </p>
-  <ion-row class = "scanner-buttons" [hidden]="scanActive">
-    <ion-col class="ion-no-padding">
-      <ion-button expand="full" (click)="scanBarcode()">
-        <ion-icon name="scan" slot="start"></ion-icon>
-        Start Scan
-      </ion-button>
-    </ion-col>
-  </ion-row>
+  <class [hidden]="scanActive">
+    <ion-item>
+      <p>
+        Here you can use your phone's camera to scan a GreenTCNJ QR code provided by an event organizer to let them know you attended. Make sure you give the app permissions to use your camera!
+      </p>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+          <ion-col>
+            <img alt="" class="center" src="../../assets/icon/qrscan.png" vertical-align="middle">
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-row class = "scanner-buttons">
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full" (click)="scanBarcode()">
+          <ion-icon name="scan" slot="start"></ion-icon>
+          Start Scan
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </class>
 
   <ion-row class = "scanner-buttons" [hidden]="!scanActive">
     <ion-col class="ion-no-padding">
