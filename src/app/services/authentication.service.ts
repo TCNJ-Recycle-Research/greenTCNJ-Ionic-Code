@@ -7,6 +7,10 @@ import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 //import { Storage } from '@capacitor/storage';
 import { Storage } from '@ionic/storage';
 import { NgModule } from '@angular/core';
+import { App } from '@capacitor/app';
+import { ModalController } from '@ionic/angular';
+import { removeAllListeners } from 'process';
+
 
 
 @Injectable({
@@ -18,7 +22,18 @@ export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
  
-  constructor(private http: HttpClient, private storage: Storage) {
+  constructor(private modalCtrl: ModalController, private http: HttpClient, private storage: Storage) {
+
+    App.addListener('backButton', ({canGoBack}) => {
+      if(this.modalCtrl.dismiss()){ }
+      else if(!canGoBack){
+        App.exitApp();
+      } 
+      else {
+        window.history.back();
+      }
+    });
+
     this.loadToken();
 
   }
@@ -53,7 +68,7 @@ export class AuthenticationService {
     var obj = {func: "jwt_login", token: token};
     return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).toPromise()
       .then(data => data)
-      .catch(msg => console.log('Error: ' + msg.status + ' ' + msg.statusText))
+      .catch(msg => console.log('Token Validation Error: ' + msg.status + ' ' + msg.statusText))
   }
 
   private updateStorage(userData): void{
@@ -90,6 +105,7 @@ export class AuthenticationService {
  
   public logout(): Promise<void> {
     this.isAuthenticated.next(false);
+    removeAllListeners();
     return this.storage.remove('token');
   }
 }

@@ -22,6 +22,7 @@
     "@capacitor-community/barcode-scanner": "^2.0.1",
     "@capacitor/android": "^3.3.0",
     "@capacitor/angular": "^1.0.3",
+    "@capacitor/app": "^1.0.6",
     "@capacitor/core": "^3.3.0",
     "@capacitor/ios": "^3.3.0",
     "@capacitor/storage": "^1.2.3",
