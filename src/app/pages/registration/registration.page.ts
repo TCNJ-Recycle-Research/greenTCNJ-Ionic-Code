@@ -4,6 +4,9 @@ import { HttpClient} from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 import { CustomValidationService } from 'src/app/services/custom-validation.service';
 import { IonSlides } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Alert } from 'selenium-webdriver';
+
 
 @Component({
   selector: 'app-registration',
@@ -20,6 +23,8 @@ export class RegistrationPage implements OnInit{
   temp: {recycling: any, water: any, pollution: any, energy: any};
   testing: boolean[];
   buttonDisabled: any;
+  userVerified = false;
+
   
 
   ngOnInit() {
@@ -33,7 +38,7 @@ export class RegistrationPage implements OnInit{
       { val: 'Energy', isChecked: false }
     ];
 
-  constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder, private customValidator: CustomValidationService) {
+  constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder, private customValidator: CustomValidationService, private alertCtrl: AlertController) {
     this.signupForm = formBuilder.group({
         firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
         lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -121,8 +126,9 @@ export class RegistrationPage implements OnInit{
       var last = this.signupForm.value['lastName'];
       var type = this.signupForm.value['userType'];
 
-      var obj = {func: "add_user", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp};
+      var obj = {func: "add_user2", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp};
 
+      //checking to see if user exists in users table (verified users)
       this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
 
           var result = data as any[];
@@ -131,29 +137,72 @@ export class RegistrationPage implements OnInit{
             // output to user it succeeded and move to next page
             console.log("Signup SUCCESS");
             this.invalidRegistration = false;
+            this.successAlert(email);
             this.navigateToLogin();
           }
           else if(result["missingInput"]){
-            // output error message of missing inputs
             console.log("Missing Input");
+            this.failAlert("ERROR: Server Missing Input");
             this.invalidRegistration = true;
             this.buttonDisabled = true;
           }
           else if(result["passwordMismatch"]){
             console.log("passwords didnt match");
+            this.failAlert("ERROR: Passwords do not match");
+            this.invalidRegistration = true;
+            this.buttonDisabled = true;
+          }
+          else if(result["userExists"]){
+            this.userVerified = true;
+            console.log("verified user exists");
+            this.failAlert("ERROR: A verified account with that email already exists! If you can't remember your password, reset it on the sign in page.");
+            this.invalidRegistration = true;
+            this.buttonDisabled = true;
+          }
+          else if(result["unverifiedExists"]){
+            console.log("unverified user exists");
+            this.failAlert("ERROR: An unverified account with that email already exists! Check your inbox for the verification email.");
             this.invalidRegistration = true;
             this.buttonDisabled = true;
           }
           else{
             // dont move to next page and output error message "Email or password entered was incorrect"
             console.log("Signup failure on server");
+            this.failAlert("ERROR: Signup failure. If this issue persists, please contact an administrator.");
             this.invalidRegistration = true;
           }
       });
-      
 
     }
     
+  }
+
+  async successAlert(email : string){
+
+    var obj = {func: "generate_confirmation", email: email};
+    this.http.post("https://recycle.hpc.tcnj.edu/php/verify-email-handler.php", JSON.stringify(obj)).subscribe(data => {
+      console.log("sent confirmation email");
+    });
+
+    const alert = await this.alertCtrl.create({
+      header: 'Registration Success!',
+      message: 'Please verify your account with the email we sent you!',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+
+  }
+
+  async failAlert(msg: string){
+    const alert = await this.alertCtrl.create({
+      header: 'Registration Failed',
+      message: msg,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+
   }
 
 
