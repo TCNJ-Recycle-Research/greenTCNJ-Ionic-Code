@@ -287,6 +287,7 @@
           this.wrongInput = false;
           this.correctInput = false;
           this.missingInput = false;
+          this.unverifiedExists = false;
           this.canLogin = false; // responsible for printing error messages to the screen based on validator 
 
           this.validation_messages = {
@@ -352,6 +353,7 @@
                   _this.invalidLogin = false;
                   _this.correctInput = true;
                   _this.missingInput = false;
+                  _this.unverifiedExists = false;
                   _this.wrongInput = false;
                 } else if (result["missingInputs"]) {
                   // output error message of missing inputs
@@ -360,6 +362,15 @@
                   _this.correctInput = false;
                   _this.missingInput = true;
                   _this.wrongInput = false;
+                  _this.unverifiedExists = false;
+                } else if (result["unverifiedExists"]) {
+                  // output error message of the account is unverified
+                  console.log("Account is unverified");
+                  _this.invalidLogin = true;
+                  _this.correctInput = false;
+                  _this.missingInput = false;
+                  _this.unverifiedExists = true;
+                  _this.wrongInput = false;
                 } else {
                   // dont move to next page and output error message "Email or password entered was incorrect"
                   console.log("Email or password was incorrect");
@@ -367,6 +378,7 @@
                   _this.correctInput = false;
                   _this.missingInput = false;
                   _this.wrongInput = true;
+                  _this.unverifiedExists = false;
                 }
               });
             }
@@ -377,20 +389,20 @@
         }, {
           key: "login",
           value: function login() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
               var _this2 = this;
 
               var loading;
-              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+              return regeneratorRuntime.wrap(function _callee6$(_context6) {
                 while (1) {
-                  switch (_context5.prev = _context5.next) {
+                  switch (_context6.prev = _context6.next) {
                     case 0:
-                      _context5.next = 2;
+                      _context6.next = 2;
                       return this.loadingController.create();
 
                     case 2:
-                      loading = _context5.sent;
-                      _context5.next = 5;
+                      loading = _context6.sent;
+                      _context6.next = 5;
                       return loading.present();
 
                     case 5:
@@ -488,8 +500,8 @@
                           this.correctInput = false;
                           this.missingInput = true;
                           this.wrongInput = false; // wrong credentials 
-                        } else if (!this.loginSuccess() && !this.missingValues() && this.wrongCredientals()) {
-                          console.log("Email or password was incorrect");
+                        } else if (!this.loginSuccess() && !this.missingValues() && !this.wrongCredientals() && this.unverifiedAccount()) {
+                          console.log("Account is unverified");
                           this.authService.login(this.loginForm.value).subscribe(function (res) {
                             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this2, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
                               var alert;
@@ -504,7 +516,7 @@
                                       _context4.next = 4;
                                       return this.alertController.create({
                                         header: 'Login failed',
-                                        message: 'Your email or password was incorrect',
+                                        message: 'You cannot log in until your account is verified.',
                                         buttons: ['OK']
                                       });
 
@@ -522,6 +534,43 @@
                             }));
                           });
                           this.correctInput = false;
+                          this.missingInput = true;
+                          this.wrongInput = false;
+                          this.unverifiedExists = true; // wrong credentials 
+                        } else if (!this.loginSuccess() && !this.missingValues() && this.wrongCredientals()) {
+                          console.log("Email or password was incorrect");
+                          this.authService.login(this.loginForm.value).subscribe(function (res) {
+                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this2, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+                              var alert;
+                              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                                while (1) {
+                                  switch (_context5.prev = _context5.next) {
+                                    case 0:
+                                      _context5.next = 2;
+                                      return loading.dismiss();
+
+                                    case 2:
+                                      _context5.next = 4;
+                                      return this.alertController.create({
+                                        header: 'Login failed',
+                                        message: 'Your email or password was incorrect',
+                                        buttons: ['OK']
+                                      });
+
+                                    case 4:
+                                      alert = _context5.sent;
+                                      _context5.next = 7;
+                                      return alert.present();
+
+                                    case 7:
+                                    case "end":
+                                      return _context5.stop();
+                                  }
+                                }
+                              }, _callee5, this);
+                            }));
+                          });
+                          this.correctInput = false;
                           this.missingInput = false;
                           this.wrongInput = true; // should never resch here   
                         } else {
@@ -531,10 +580,10 @@
 
                     case 6:
                     case "end":
-                      return _context5.stop();
+                      return _context6.stop();
                   }
                 }
-              }, _callee5, this);
+              }, _callee6, this);
             }));
           } // function to route to the home page after logging in 
 
@@ -582,6 +631,11 @@
           key: "missingValues",
           value: function missingValues() {
             return this.missingInput;
+          }
+        }, {
+          key: "unverifiedAccount",
+          value: function unverifiedAccount() {
+            return this.unverifiedExists;
           }
         }]);
 

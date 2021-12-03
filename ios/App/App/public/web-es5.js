@@ -245,6 +245,146 @@
     },
 
     /***/
+    "p3nu":
+    /*!*****************************************************!*\
+      !*** ./node_modules/@capacitor/app/dist/esm/web.js ***!
+      \*****************************************************/
+
+    /*! exports provided: AppWeb */
+
+    /***/
+    function p3nu(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "AppWeb", function () {
+        return AppWeb;
+      });
+      /* harmony import */
+
+
+      var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @capacitor/core */
+      "FUe0");
+
+      var AppWeb = /*#__PURE__*/function (_capacitor_core__WEBP2) {
+        _inherits(AppWeb, _capacitor_core__WEBP2);
+
+        var _super2 = _createSuper(AppWeb);
+
+        function AppWeb() {
+          var _this;
+
+          _classCallCheck(this, AppWeb);
+
+          _this = _super2.call(this);
+
+          _this.handleVisibilityChange = function () {
+            var data = {
+              isActive: document.hidden !== true
+            };
+
+            _this.notifyListeners('appStateChange', data);
+          };
+
+          document.addEventListener('visibilitychange', _this.handleVisibilityChange, false);
+          return _this;
+        }
+
+        _createClass(AppWeb, [{
+          key: "exitApp",
+          value: function exitApp() {
+            throw this.unimplemented('Not implemented on web.');
+          }
+        }, {
+          key: "getInfo",
+          value: function () {
+            var _getInfo = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                while (1) {
+                  switch (_context8.prev = _context8.next) {
+                    case 0:
+                      throw this.unimplemented('Not implemented on web.');
+
+                    case 1:
+                    case "end":
+                      return _context8.stop();
+                  }
+                }
+              }, _callee8, this);
+            }));
+
+            function getInfo() {
+              return _getInfo.apply(this, arguments);
+            }
+
+            return getInfo;
+          }()
+        }, {
+          key: "getLaunchUrl",
+          value: function () {
+            var _getLaunchUrl = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                while (1) {
+                  switch (_context9.prev = _context9.next) {
+                    case 0:
+                      return _context9.abrupt("return", {
+                        url: ''
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context9.stop();
+                  }
+                }
+              }, _callee9);
+            }));
+
+            function getLaunchUrl() {
+              return _getLaunchUrl.apply(this, arguments);
+            }
+
+            return getLaunchUrl;
+          }()
+        }, {
+          key: "getState",
+          value: function () {
+            var _getState = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+                while (1) {
+                  switch (_context10.prev = _context10.next) {
+                    case 0:
+                      return _context10.abrupt("return", {
+                        isActive: document.hidden !== true
+                      });
+
+                    case 1:
+                    case "end":
+                      return _context10.stop();
+                  }
+                }
+              }, _callee10);
+            }));
+
+            function getState() {
+              return _getState.apply(this, arguments);
+            }
+
+            return getState;
+          }()
+        }]);
+
+        return AppWeb;
+      }(_capacitor_core__WEBPACK_IMPORTED_MODULE_0__["WebPlugin"]); //# sourceMappingURL=web.js.map
+
+      /***/
+
+    },
+
+    /***/
     "srMn":
     /*!*********************************************************!*\
       !*** ./node_modules/@capacitor/storage/dist/esm/web.js ***!
@@ -270,29 +410,29 @@
       /*! @capacitor/core */
       "FUe0");
 
-      var StorageWeb = /*#__PURE__*/function (_capacitor_core__WEBP2) {
-        _inherits(StorageWeb, _capacitor_core__WEBP2);
+      var StorageWeb = /*#__PURE__*/function (_capacitor_core__WEBP3) {
+        _inherits(StorageWeb, _capacitor_core__WEBP3);
 
-        var _super2 = _createSuper(StorageWeb);
+        var _super3 = _createSuper(StorageWeb);
 
         function StorageWeb() {
-          var _this;
+          var _this2;
 
           _classCallCheck(this, StorageWeb);
 
-          _this = _super2.apply(this, arguments);
-          _this.group = 'CapacitorStorage';
-          return _this;
+          _this2 = _super3.apply(this, arguments);
+          _this2.group = 'CapacitorStorage';
+          return _this2;
         }
 
         _createClass(StorageWeb, [{
           key: "configure",
           value: function () {
-            var _configure = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(_ref) {
+            var _configure = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(_ref) {
               var group;
-              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+              return regeneratorRuntime.wrap(function _callee11$(_context11) {
                 while (1) {
-                  switch (_context8.prev = _context8.next) {
+                  switch (_context11.prev = _context11.next) {
                     case 0:
                       group = _ref.group;
 
@@ -302,10 +442,10 @@
 
                     case 2:
                     case "end":
-                      return _context8.stop();
+                      return _context11.stop();
                   }
                 }
-              }, _callee8, this);
+              }, _callee11, this);
             }));
 
             function configure(_x3) {
@@ -317,23 +457,23 @@
         }, {
           key: "get",
           value: function () {
-            var _get = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(options) {
+            var _get = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(options) {
               var value;
-              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+              return regeneratorRuntime.wrap(function _callee12$(_context12) {
                 while (1) {
-                  switch (_context9.prev = _context9.next) {
+                  switch (_context12.prev = _context12.next) {
                     case 0:
                       value = this.impl.getItem(this.applyPrefix(options.key));
-                      return _context9.abrupt("return", {
+                      return _context12.abrupt("return", {
                         value: value
                       });
 
                     case 2:
                     case "end":
-                      return _context9.stop();
+                      return _context12.stop();
                   }
                 }
-              }, _callee9, this);
+              }, _callee12, this);
             }));
 
             function get(_x4) {
@@ -345,19 +485,19 @@
         }, {
           key: "set",
           value: function () {
-            var _set = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(options) {
-              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+            var _set = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(options) {
+              return regeneratorRuntime.wrap(function _callee13$(_context13) {
                 while (1) {
-                  switch (_context10.prev = _context10.next) {
+                  switch (_context13.prev = _context13.next) {
                     case 0:
                       this.impl.setItem(this.applyPrefix(options.key), options.value);
 
                     case 1:
                     case "end":
-                      return _context10.stop();
+                      return _context13.stop();
                   }
                 }
-              }, _callee10, this);
+              }, _callee13, this);
             }));
 
             function set(_x5) {
@@ -369,19 +509,19 @@
         }, {
           key: "remove",
           value: function () {
-            var _remove = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(options) {
-              return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            var _remove = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(options) {
+              return regeneratorRuntime.wrap(function _callee14$(_context14) {
                 while (1) {
-                  switch (_context11.prev = _context11.next) {
+                  switch (_context14.prev = _context14.next) {
                     case 0:
                       this.impl.removeItem(this.applyPrefix(options.key));
 
                     case 1:
                     case "end":
-                      return _context11.stop();
+                      return _context14.stop();
                   }
                 }
-              }, _callee11, this);
+              }, _callee14, this);
             }));
 
             function remove(_x6) {
@@ -393,27 +533,27 @@
         }, {
           key: "keys",
           value: function () {
-            var _keys = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
-              var _this2 = this;
+            var _keys = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+              var _this3 = this;
 
               var keys;
-              return regeneratorRuntime.wrap(function _callee12$(_context12) {
+              return regeneratorRuntime.wrap(function _callee15$(_context15) {
                 while (1) {
-                  switch (_context12.prev = _context12.next) {
+                  switch (_context15.prev = _context15.next) {
                     case 0:
                       keys = this.rawKeys().map(function (k) {
-                        return k.substring(_this2.prefix.length);
+                        return k.substring(_this3.prefix.length);
                       });
-                      return _context12.abrupt("return", {
+                      return _context15.abrupt("return", {
                         keys: keys
                       });
 
                     case 2:
                     case "end":
-                      return _context12.stop();
+                      return _context15.stop();
                   }
                 }
-              }, _callee12, this);
+              }, _callee15, this);
             }));
 
             function keys() {
@@ -425,12 +565,12 @@
         }, {
           key: "clear",
           value: function () {
-            var _clear = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
+            var _clear = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
               var _iterator, _step, key;
 
-              return regeneratorRuntime.wrap(function _callee13$(_context13) {
+              return regeneratorRuntime.wrap(function _callee16$(_context16) {
                 while (1) {
-                  switch (_context13.prev = _context13.next) {
+                  switch (_context16.prev = _context16.next) {
                     case 0:
                       _iterator = _createForOfIteratorHelper(this.rawKeys());
 
@@ -447,10 +587,10 @@
 
                     case 2:
                     case "end":
-                      return _context13.stop();
+                      return _context16.stop();
                   }
                 }
-              }, _callee13, this);
+              }, _callee16, this);
             }));
 
             function clear() {
@@ -462,12 +602,12 @@
         }, {
           key: "migrate",
           value: function () {
-            var _migrate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
+            var _migrate = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
               var _a, migrated, existing, oldprefix, keys, _iterator2, _step2, oldkey, key, value, _yield$this$get, currentValue;
 
-              return regeneratorRuntime.wrap(function _callee14$(_context14) {
+              return regeneratorRuntime.wrap(function _callee17$(_context17) {
                 while (1) {
-                  switch (_context14.prev = _context14.next) {
+                  switch (_context17.prev = _context17.next) {
                     case 0:
                       migrated = [];
                       existing = [];
@@ -476,39 +616,39 @@
                         return k.indexOf(oldprefix) === 0;
                       });
                       _iterator2 = _createForOfIteratorHelper(keys);
-                      _context14.prev = 5;
+                      _context17.prev = 5;
 
                       _iterator2.s();
 
                     case 7:
                       if ((_step2 = _iterator2.n()).done) {
-                        _context14.next = 24;
+                        _context17.next = 24;
                         break;
                       }
 
                       oldkey = _step2.value;
                       key = oldkey.substring(oldprefix.length);
                       value = (_a = this.impl.getItem(oldkey)) !== null && _a !== void 0 ? _a : '';
-                      _context14.next = 13;
+                      _context17.next = 13;
                       return this.get({
                         key: key
                       });
 
                     case 13:
-                      _yield$this$get = _context14.sent;
+                      _yield$this$get = _context17.sent;
                       currentValue = _yield$this$get.value;
 
                       if (!(typeof currentValue === 'string')) {
-                        _context14.next = 19;
+                        _context17.next = 19;
                         break;
                       }
 
                       existing.push(key);
-                      _context14.next = 22;
+                      _context17.next = 22;
                       break;
 
                     case 19:
-                      _context14.next = 21;
+                      _context17.next = 21;
                       return this.set({
                         key: key,
                         value: value
@@ -518,38 +658,38 @@
                       migrated.push(key);
 
                     case 22:
-                      _context14.next = 7;
+                      _context17.next = 7;
                       break;
 
                     case 24:
-                      _context14.next = 29;
+                      _context17.next = 29;
                       break;
 
                     case 26:
-                      _context14.prev = 26;
-                      _context14.t0 = _context14["catch"](5);
+                      _context17.prev = 26;
+                      _context17.t0 = _context17["catch"](5);
 
-                      _iterator2.e(_context14.t0);
+                      _iterator2.e(_context17.t0);
 
                     case 29:
-                      _context14.prev = 29;
+                      _context17.prev = 29;
 
                       _iterator2.f();
 
-                      return _context14.finish(29);
+                      return _context17.finish(29);
 
                     case 32:
-                      return _context14.abrupt("return", {
+                      return _context17.abrupt("return", {
                         migrated: migrated,
                         existing: existing
                       });
 
                     case 33:
                     case "end":
-                      return _context14.stop();
+                      return _context17.stop();
                   }
                 }
-              }, _callee14, this, [[5, 26, 29, 32]]);
+              }, _callee17, this, [[5, 26, 29, 32]]);
             }));
 
             function migrate() {
@@ -561,12 +701,12 @@
         }, {
           key: "removeOld",
           value: function () {
-            var _removeOld = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
+            var _removeOld = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
               var oldprefix, keys, _iterator3, _step3, oldkey;
 
-              return regeneratorRuntime.wrap(function _callee15$(_context15) {
+              return regeneratorRuntime.wrap(function _callee18$(_context18) {
                 while (1) {
-                  switch (_context15.prev = _context15.next) {
+                  switch (_context18.prev = _context18.next) {
                     case 0:
                       oldprefix = '_cap_';
                       keys = Object.keys(this.impl).filter(function (k) {
@@ -587,10 +727,10 @@
 
                     case 4:
                     case "end":
-                      return _context15.stop();
+                      return _context18.stop();
                   }
                 }
-              }, _callee15, this);
+              }, _callee18, this);
             }));
 
             function removeOld() {
@@ -612,10 +752,10 @@
         }, {
           key: "rawKeys",
           value: function rawKeys() {
-            var _this3 = this;
+            var _this4 = this;
 
             return Object.keys(this.impl).filter(function (k) {
-              return k.indexOf(_this3.prefix) === 0;
+              return k.indexOf(_this4.prefix) === 0;
             });
           }
         }, {

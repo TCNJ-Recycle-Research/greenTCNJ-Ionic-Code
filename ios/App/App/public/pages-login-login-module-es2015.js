@@ -160,6 +160,7 @@ let LoginPage = class LoginPage {
         this.wrongInput = false;
         this.correctInput = false;
         this.missingInput = false;
+        this.unverifiedExists = false;
         this.canLogin = false;
         // responsible for printing error messages to the screen based on validator 
         this.validation_messages = {
@@ -204,6 +205,7 @@ let LoginPage = class LoginPage {
                     this.invalidLogin = false;
                     this.correctInput = true;
                     this.missingInput = false;
+                    this.unverifiedExists = false;
                     this.wrongInput = false;
                 }
                 else if (result["missingInputs"]) {
@@ -213,6 +215,16 @@ let LoginPage = class LoginPage {
                     this.correctInput = false;
                     this.missingInput = true;
                     this.wrongInput = false;
+                    this.unverifiedExists = false;
+                }
+                else if (result["unverifiedExists"]) {
+                    // output error message of the account is unverified
+                    console.log("Account is unverified");
+                    this.invalidLogin = true;
+                    this.correctInput = false;
+                    this.missingInput = false;
+                    this.unverifiedExists = true;
+                    this.wrongInput = false;
                 }
                 else {
                     // dont move to next page and output error message "Email or password entered was incorrect"
@@ -221,6 +233,7 @@ let LoginPage = class LoginPage {
                     this.correctInput = false;
                     this.missingInput = false;
                     this.wrongInput = true;
+                    this.unverifiedExists = false;
                 }
             });
         }
@@ -273,6 +286,23 @@ let LoginPage = class LoginPage {
                     this.wrongInput = false;
                     // wrong credentials 
                 }
+                else if (!this.loginSuccess() && !this.missingValues() && !this.wrongCredientals() && this.unverifiedAccount()) {
+                    console.log("Account is unverified");
+                    this.authService.login(this.loginForm.value).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                        yield loading.dismiss();
+                        const alert = yield this.alertController.create({
+                            header: 'Login failed',
+                            message: 'You cannot log in until your account is verified.',
+                            buttons: ['OK'],
+                        });
+                        yield alert.present();
+                    }));
+                    this.correctInput = false;
+                    this.missingInput = true;
+                    this.wrongInput = false;
+                    this.unverifiedExists = true;
+                    // wrong credentials 
+                }
                 else if (!this.loginSuccess() && !this.missingValues() && this.wrongCredientals()) {
                     console.log("Email or password was incorrect");
                     this.authService.login(this.loginForm.value).subscribe((res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -323,6 +353,9 @@ let LoginPage = class LoginPage {
     }
     missingValues() {
         return this.missingInput;
+    }
+    unverifiedAccount() {
+        return this.unverifiedExists;
     }
 };
 LoginPage.ctorParameters = () => [

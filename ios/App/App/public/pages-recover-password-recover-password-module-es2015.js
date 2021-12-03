@@ -115,13 +115,14 @@ let RecoverPasswordPage = class RecoverPasswordPage {
             // Find a way to get email and password input from user
             var obj = { func: "generate_reset", email: this.emailForm.value['email'], isMobileRequest: true };
             this.http.post("https://recycle.hpc.tcnj.edu/php/password-resets-handler.php", JSON.stringify(obj)).subscribe(data => {
+                //not getting result
                 var result = data;
                 if (result['missingInput']) {
-                    // output to user it succeeded and move to next page
                     console.log("missing Input");
                     this.emailSent = false;
                 }
                 else {
+                    // output to user it succeeded and move to next page
                     this.emailSent = true;
                     console.log("email sent");
                     this.emailForm.reset();

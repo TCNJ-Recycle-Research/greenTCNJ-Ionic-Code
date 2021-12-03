@@ -209,13 +209,14 @@
                 isMobileRequest: true
               };
               this.http.post("https://recycle.hpc.tcnj.edu/php/password-resets-handler.php", JSON.stringify(obj)).subscribe(function (data) {
+                //not getting result
                 var result = data;
 
                 if (result['missingInput']) {
-                  // output to user it succeeded and move to next page
                   console.log("missing Input");
                   _this.emailSent = false;
                 } else {
+                  // output to user it succeeded and move to next page
                   _this.emailSent = true;
                   console.log("email sent");
 

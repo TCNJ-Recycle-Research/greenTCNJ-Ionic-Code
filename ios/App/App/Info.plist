@@ -26,7 +26,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>capacitor</string>
-				<!-- replace capacitor w/ mycustomscheme -->
 			</array>
 		</dict>
 	</array>

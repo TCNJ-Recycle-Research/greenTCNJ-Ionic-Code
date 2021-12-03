@@ -178,18 +178,19 @@
 
       var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @ionic/angular */
-      "TEn/"); //import { Storage } from '@capacitor/storage';
-
+      "TEn/");
 
       var RegistrationPage = /*#__PURE__*/function () {
-        function RegistrationPage(router, http, formBuilder, customValidator) {
+        function RegistrationPage(router, http, formBuilder, customValidator, alertCtrl) {
           _classCallCheck(this, RegistrationPage);
 
           this.router = router;
           this.http = http;
           this.formBuilder = formBuilder;
           this.customValidator = customValidator;
-          this.invalidRegistration = false; // thses are currently not being stored anywhere they are just in place to select after registration, will connect to db next semester 
+          this.alertCtrl = alertCtrl;
+          this.invalidRegistration = false;
+          this.userVerified = false; // thses are currently not being stored anywhere they are just in place to select after registration, will connect to db next semester 
 
           this.form = [{
             val: 'Recycling',
@@ -312,7 +313,7 @@
               var last = this.signupForm.value['lastName'];
               var type = this.signupForm.value['userType'];
               var obj = {
-                func: "add_user",
+                func: "add_user2",
                 email: email,
                 password: pwd,
                 passwordRepeat: pwdRepeat,
@@ -320,7 +321,8 @@
                 lastName: last,
                 userType: type,
                 userInterests: this.temp
-              };
+              }; //checking to see if user exists in users table (verified users)
+
               this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(function (data) {
                 var result = data;
 
@@ -329,23 +331,113 @@
                   console.log("Signup SUCCESS");
                   _this.invalidRegistration = false;
 
+                  _this.successAlert(email);
+
                   _this.navigateToLogin();
                 } else if (result["missingInput"]) {
-                  // output error message of missing inputs
                   console.log("Missing Input");
+
+                  _this.failAlert("ERROR: Server Missing Input");
+
                   _this.invalidRegistration = true;
                   _this.buttonDisabled = true;
                 } else if (result["passwordMismatch"]) {
                   console.log("passwords didnt match");
+
+                  _this.failAlert("ERROR: Passwords do not match");
+
+                  _this.invalidRegistration = true;
+                  _this.buttonDisabled = true;
+                } else if (result["userExists"]) {
+                  _this.userVerified = true;
+                  console.log("verified user exists");
+
+                  _this.failAlert("ERROR: A verified account with that email already exists! If you can't remember your password, reset it on the sign in page.");
+
+                  _this.invalidRegistration = true;
+                  _this.buttonDisabled = true;
+                } else if (result["unverifiedExists"]) {
+                  console.log("unverified user exists");
+
+                  _this.failAlert("ERROR: An unverified account with that email already exists! Check your inbox for the verification email.");
+
                   _this.invalidRegistration = true;
                   _this.buttonDisabled = true;
                 } else {
                   // dont move to next page and output error message "Email or password entered was incorrect"
                   console.log("Signup failure on server");
+
+                  _this.failAlert("ERROR: Signup failure. If this issue persists, please contact an administrator.");
+
                   _this.invalidRegistration = true;
                 }
               });
             }
+          }
+        }, {
+          key: "successAlert",
+          value: function successAlert(email) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var obj, alert;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      obj = {
+                        func: "generate_confirmation",
+                        email: email
+                      };
+                      this.http.post("https://recycle.hpc.tcnj.edu/php/verify-email-handler.php", JSON.stringify(obj)).subscribe(function (data) {
+                        console.log("sent confirmation email");
+                      });
+                      _context.next = 4;
+                      return this.alertCtrl.create({
+                        header: 'Registration Success!',
+                        message: 'Please verify your account with the email we sent you!',
+                        buttons: ['OK']
+                      });
+
+                    case 4:
+                      alert = _context.sent;
+                      _context.next = 7;
+                      return alert.present();
+
+                    case 7:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "failAlert",
+          value: function failAlert(msg) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              var alert;
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _context2.next = 2;
+                      return this.alertCtrl.create({
+                        header: 'Registration Failed',
+                        message: msg,
+                        buttons: ['OK']
+                      });
+
+                    case 2:
+                      alert = _context2.sent;
+                      _context2.next = 5;
+                      return alert.present();
+
+                    case 5:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee2, this);
+            }));
           }
         }, {
           key: "setRecycleInterest",
@@ -453,6 +545,8 @@
           type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]
         }, {
           type: src_app_services_custom_validation_service__WEBPACK_IMPORTED_MODULE_7__["CustomValidationService"]
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__["AlertController"]
         }];
       };
 

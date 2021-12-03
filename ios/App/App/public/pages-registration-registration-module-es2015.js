@@ -91,14 +91,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import { Storage } from '@capacitor/storage';
+
 let RegistrationPage = class RegistrationPage {
-    constructor(router, http, formBuilder, customValidator) {
+    constructor(router, http, formBuilder, customValidator, alertCtrl) {
         this.router = router;
         this.http = http;
         this.formBuilder = formBuilder;
         this.customValidator = customValidator;
+        this.alertCtrl = alertCtrl;
         this.invalidRegistration = false;
+        this.userVerified = false;
         // thses are currently not being stored anywhere they are just in place to select after registration, will connect to db next semester 
         this.form = [
             { val: 'Recycling', isChecked: false },
@@ -185,33 +187,74 @@ let RegistrationPage = class RegistrationPage {
             var first = this.signupForm.value['firstName'];
             var last = this.signupForm.value['lastName'];
             var type = this.signupForm.value['userType'];
-            var obj = { func: "add_user", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp };
+            var obj = { func: "add_user2", email: email, password: pwd, passwordRepeat: pwdRepeat, firstName: first, lastName: last, userType: type, userInterests: this.temp };
+            //checking to see if user exists in users table (verified users)
             this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).subscribe(data => {
                 var result = data;
                 if (result["addSuccess"]) {
                     // output to user it succeeded and move to next page
                     console.log("Signup SUCCESS");
                     this.invalidRegistration = false;
+                    this.successAlert(email);
                     this.navigateToLogin();
                 }
                 else if (result["missingInput"]) {
-                    // output error message of missing inputs
                     console.log("Missing Input");
+                    this.failAlert("ERROR: Server Missing Input");
                     this.invalidRegistration = true;
                     this.buttonDisabled = true;
                 }
                 else if (result["passwordMismatch"]) {
                     console.log("passwords didnt match");
+                    this.failAlert("ERROR: Passwords do not match");
+                    this.invalidRegistration = true;
+                    this.buttonDisabled = true;
+                }
+                else if (result["userExists"]) {
+                    this.userVerified = true;
+                    console.log("verified user exists");
+                    this.failAlert("ERROR: A verified account with that email already exists! If you can't remember your password, reset it on the sign in page.");
+                    this.invalidRegistration = true;
+                    this.buttonDisabled = true;
+                }
+                else if (result["unverifiedExists"]) {
+                    console.log("unverified user exists");
+                    this.failAlert("ERROR: An unverified account with that email already exists! Check your inbox for the verification email.");
                     this.invalidRegistration = true;
                     this.buttonDisabled = true;
                 }
                 else {
                     // dont move to next page and output error message "Email or password entered was incorrect"
                     console.log("Signup failure on server");
+                    this.failAlert("ERROR: Signup failure. If this issue persists, please contact an administrator.");
                     this.invalidRegistration = true;
                 }
             });
         }
+    }
+    successAlert(email) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            var obj = { func: "generate_confirmation", email: email };
+            this.http.post("https://recycle.hpc.tcnj.edu/php/verify-email-handler.php", JSON.stringify(obj)).subscribe(data => {
+                console.log("sent confirmation email");
+            });
+            const alert = yield this.alertCtrl.create({
+                header: 'Registration Success!',
+                message: 'Please verify your account with the email we sent you!',
+                buttons: ['OK'],
+            });
+            yield alert.present();
+        });
+    }
+    failAlert(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertCtrl.create({
+                header: 'Registration Failed',
+                message: msg,
+                buttons: ['OK'],
+            });
+            yield alert.present();
+        });
     }
     setRecycleInterest(x) {
         if (x) {
@@ -291,7 +334,8 @@ RegistrationPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] },
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"] },
-    { type: src_app_services_custom_validation_service__WEBPACK_IMPORTED_MODULE_7__["CustomValidationService"] }
+    { type: src_app_services_custom_validation_service__WEBPACK_IMPORTED_MODULE_7__["CustomValidationService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__["AlertController"] }
 ];
 RegistrationPage.propDecorators = {
     slides: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: [_ionic_angular__WEBPACK_IMPORTED_MODULE_8__["IonSlides"],] }]

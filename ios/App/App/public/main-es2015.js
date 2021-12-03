@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/jgadde/greenTCNJ-Ionic-Code/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /Users/pepped/Documents/greenTCNJ-Ionic-Code/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -73,8 +73,8 @@ let AutoLoginGuard = class AutoLoginGuard {
         return this.authService.isAuthenticated.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(val => val !== null), // Filter out initial Behaviour subject value
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1), // Otherwise the Observable doesn't complete!
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(isAuthenticated => {
-            console.log('Found previous token, automatic login');
             if (isAuthenticated) {
+                console.log('Found previous token, automatic login');
                 this.router.navigateByUrl('/home', { replaceUrl: true });
             }
             else {
@@ -244,7 +244,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "Sy1n");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "vY5A");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var _ionic_native_native_storage_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/native-storage/ngx */ "M2ZX");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/storage */ "e8h1");
+/* harmony import */ var _ionic_native_native_storage_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/native-storage/ngx */ "M2ZX");
+
 
 
 
@@ -265,6 +267,7 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(),
             // NativeStorageModule.forRoot(),
+            _ionic_storage__WEBPACK_IMPORTED_MODULE_10__["IonicStorageModule"].forRoot(),
             _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClientModule"],
         ],
@@ -272,7 +275,7 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
             _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"],
             { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] },
-            _ionic_native_native_storage_ngx__WEBPACK_IMPORTED_MODULE_10__["NativeStorage"]
+            _ionic_native_native_storage_ngx__WEBPACK_IMPORTED_MODULE_11__["NativeStorage"]
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
     })
@@ -347,52 +350,99 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var _capacitor_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @capacitor/storage */ "YwB3");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/storage */ "e8h1");
+/* harmony import */ var _capacitor_app__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @capacitor/app */ "Ktnr");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! process */ "8oxB");
+/* harmony import */ var process__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(process__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
 
 
+//import { Storage } from '@capacitor/storage';
 
-const TOKEN_KEY = 'my-token';
-//const ACCESS_TOKEN_KEY = 'my-access-token';
-//const REFRESH_TOKEN_KEY = 'my-refresh-token';
+
+
+
 let AuthenticationService = class AuthenticationService {
-    constructor(http) {
+    constructor(modalCtrl, http, storage) {
+        this.modalCtrl = modalCtrl;
         this.http = http;
+        this.storage = storage;
         // Init with null to filter out the first value in a guard!
         this.isAuthenticated = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](null);
-        this.token = '12345';
+        _capacitor_app__WEBPACK_IMPORTED_MODULE_6__["App"].addListener('backButton', ({ canGoBack }) => {
+            if (this.modalCtrl.dismiss()) { }
+            else if (!canGoBack) {
+                _capacitor_app__WEBPACK_IMPORTED_MODULE_6__["App"].exitApp();
+            }
+            else {
+                window.history.back();
+            }
+        });
         this.loadToken();
     }
     loadToken() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const token = yield _capacitor_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"].get({ key: TOKEN_KEY });
-            if (token && token.value) {
-                console.log('set token: ', token.value);
-                this.token = token.value;
-                this.isAuthenticated.next(true);
+            const storedToken = yield this.storage.get('token');
+            if (storedToken) {
+                this.validateToken(storedToken).then(data => {
+                    var result = data;
+                    if (result["loginSuccess"]) {
+                        console.log("TOKEN VALID");
+                        this.storage.set('token', result["token"]);
+                        this.updateStorage(result["userInfo"][0]);
+                        this.isAuthenticated.next(true);
+                    }
+                    else {
+                        console.log("TOKEN INVALID");
+                        this.isAuthenticated.next(false);
+                    }
+                });
             }
             else {
+                console.log("NO TOKEN");
                 this.isAuthenticated.next(false);
             }
         });
     }
+    validateToken(token) {
+        var obj = { func: "jwt_login", token: token };
+        return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).toPromise()
+            .then(data => data)
+            .catch(msg => console.log('Token Validation Error: ' + msg.status + ' ' + msg.statusText));
+    }
+    updateStorage(userData) {
+        // this is used to store user info within the app, stores userID, Name, type, and email 
+        this.storage.set('userID', userData['userID']);
+        this.storage.set('userName', userData['userFirstName']);
+        this.storage.set('userType', userData['userType']);
+        this.storage.set('userEmail', userData["userEmail"]);
+        // used to set user interests within the app
+        this.storage.set('userRecyclingInterest', userData["recyclingInterest"]);
+        this.storage.set('userWaterInterest', userData["waterInterest"]);
+        this.storage.set('userPollutionInterest', userData["pollutionInterest"]);
+        this.storage.set('userEnergyInterest', userData["energyInterest"]);
+    }
     login(credentials) {
         var obj = { func: "try_login", email: credentials.email, password: credentials.password };
-        return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((data) => data.token), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(token => {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["from"])(_capacitor_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"].set({ key: TOKEN_KEY, value: token }));
+        return this.http.post("https://recycle.hpc.tcnj.edu/php/users-handler.php", JSON.stringify(obj)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((data) => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(data => {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["from"])(this.storage.set('token', data["token"]));
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(_ => {
             this.isAuthenticated.next(true);
         }));
     }
     logout() {
         this.isAuthenticated.next(false);
-        return _capacitor_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"].remove({ key: TOKEN_KEY });
+        Object(process__WEBPACK_IMPORTED_MODULE_8__["removeAllListeners"])();
+        return this.storage.remove('token');
     }
 };
 AuthenticationService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"] },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"] }
 ];
 AuthenticationService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -672,7 +722,7 @@ const routes = [
     },
     {
         path: 'home',
-        loadChildren: () => Promise.all(/*! import() | home-home-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("default~home-home-module~pages-schedule-schedule-module"), __webpack_require__.e("home-home-module")]).then(__webpack_require__.bind(null, /*! ./home/home.module */ "ct+p")).then(m => m.HomePageModule),
+        loadChildren: () => Promise.all(/*! import() | home-home-module */[__webpack_require__.e("default~home-home-module~pages-schedule-schedule-module"), __webpack_require__.e("home-home-module")]).then(__webpack_require__.bind(null, /*! ./home/home.module */ "ct+p")).then(m => m.HomePageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
@@ -682,22 +732,22 @@ const routes = [
     },
     {
         path: 'schedule',
-        loadChildren: () => Promise.all(/*! import() | pages-schedule-schedule-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("default~home-home-module~pages-schedule-schedule-module"), __webpack_require__.e("pages-schedule-schedule-module")]).then(__webpack_require__.bind(null, /*! ./pages/schedule/schedule.module */ "nLfy")).then(m => m.SchedulePageModule),
+        loadChildren: () => Promise.all(/*! import() | pages-schedule-schedule-module */[__webpack_require__.e("default~home-home-module~pages-schedule-schedule-module"), __webpack_require__.e("pages-schedule-schedule-module")]).then(__webpack_require__.bind(null, /*! ./pages/schedule/schedule.module */ "nLfy")).then(m => m.SchedulePageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'news',
-        loadChildren: () => Promise.all(/*! import() | pages-news-news-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("common"), __webpack_require__.e("pages-news-news-module")]).then(__webpack_require__.bind(null, /*! ./pages/news/news.module */ "qUUn")).then(m => m.NewsPageModule),
+        loadChildren: () => Promise.all(/*! import() | pages-news-news-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-news-news-module")]).then(__webpack_require__.bind(null, /*! ./pages/news/news.module */ "qUUn")).then(m => m.NewsPageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'settings',
-        loadChildren: () => Promise.all(/*! import() | pages-settings-settings-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-settings-settings-module")]).then(__webpack_require__.bind(null, /*! ./pages/settings/settings.module */ "yPrK")).then(m => m.SettingsPageModule),
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-settings-settings-module */ "pages-settings-settings-module").then(__webpack_require__.bind(null, /*! ./pages/settings/settings.module */ "yPrK")).then(m => m.SettingsPageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'reportissue',
-        loadChildren: () => Promise.all(/*! import() | pages-reportissue-reportissue-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-reportissue-reportissue-module")]).then(__webpack_require__.bind(null, /*! ./pages/reportissue/reportissue.module */ "UOYY")).then(m => m.ReportissuePageModule),
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-reportissue-reportissue-module */ "pages-reportissue-reportissue-module").then(__webpack_require__.bind(null, /*! ./pages/reportissue/reportissue.module */ "UOYY")).then(m => m.ReportissuePageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
@@ -707,12 +757,12 @@ const routes = [
     },
     {
         path: 'event-modal',
-        loadChildren: () => Promise.all(/*! import() | pages-event-modal-event-modal-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-event-modal-event-modal-module")]).then(__webpack_require__.bind(null, /*! ./pages/event-modal/event-modal.module */ "YKP9")).then(m => m.EventModalPageModule),
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-event-modal-event-modal-module */ "pages-event-modal-event-modal-module").then(__webpack_require__.bind(null, /*! ./pages/event-modal/event-modal.module */ "YKP9")).then(m => m.EventModalPageModule),
         canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'login',
-        loadChildren: () => Promise.all(/*! import() | pages-login-login-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-login-login-module")]).then(__webpack_require__.bind(null, /*! ./pages/login/login.module */ "F4UR")).then(m => m.LoginPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-login-login-module */ "pages-login-login-module").then(__webpack_require__.bind(null, /*! ./pages/login/login.module */ "F4UR")).then(m => m.LoginPageModule)
     },
     {
         path: 'registration',
@@ -746,19 +796,23 @@ const routes = [
     },
     {
         path: 'suggestmaterial',
-        loadChildren: () => Promise.all(/*! import() | pages-suggestmaterial-suggestmaterial-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-suggestmaterial-suggestmaterial-module")]).then(__webpack_require__.bind(null, /*! ./pages/suggestmaterial/suggestmaterial.module */ "peSJ")).then(m => m.SuggestmaterialPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-suggestmaterial-suggestmaterial-module */ "pages-suggestmaterial-suggestmaterial-module").then(__webpack_require__.bind(null, /*! ./pages/suggestmaterial/suggestmaterial.module */ "peSJ")).then(m => m.SuggestmaterialPageModule),
+        canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'qr-scanner',
-        loadChildren: () => Promise.all(/*! import() | pages-qr-scanner-qr-scanner-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-qr-scanner-qr-scanner-module")]).then(__webpack_require__.bind(null, /*! ./pages/qr-scanner/qr-scanner.module */ "3Vir")).then(m => m.QrScannerPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-qr-scanner-qr-scanner-module */ "pages-qr-scanner-qr-scanner-module").then(__webpack_require__.bind(null, /*! ./pages/qr-scanner/qr-scanner.module */ "3Vir")).then(m => m.QrScannerPageModule),
+        canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'news-modal',
-        loadChildren: () => Promise.all(/*! import() | pages-news-modal-news-modal-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-news-modal-news-modal-module")]).then(__webpack_require__.bind(null, /*! ./pages/news-modal/news-modal.module */ "uFFq")).then(m => m.NewsModalPageModule)
+        loadChildren: () => Promise.all(/*! import() | pages-news-modal-news-modal-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-news-modal-news-modal-module")]).then(__webpack_require__.bind(null, /*! ./pages/news-modal/news-modal.module */ "uFFq")).then(m => m.NewsModalPageModule),
+        canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
     {
         path: 'my-registered-events',
-        loadChildren: () => Promise.all(/*! import() | pages-my-registered-events-my-registered-events-module */[__webpack_require__.e("default~home-home-module~pages-event-modal-event-modal-module~pages-login-login-module~pages-my-regi~258a19ab"), __webpack_require__.e("pages-my-registered-events-my-registered-events-module")]).then(__webpack_require__.bind(null, /*! ./pages/my-registered-events/my-registered-events.module */ "mHEi")).then(m => m.MyRegisteredEventsPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | pages-my-registered-events-my-registered-events-module */ "pages-my-registered-events-my-registered-events-module").then(__webpack_require__.bind(null, /*! ./pages/my-registered-events/my-registered-events.module */ "mHEi")).then(m => m.MyRegisteredEventsPageModule),
+        canLoad: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -785,7 +839,7 @@ AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".validation-errors {\n  color: red;\n  margin: 10px;\n  font-size: 75%;\n}\n\n.ios ion-button {\n  text-transform: uppercase;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFVBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtBQUNKOztBQUVBO0VBQ0kseUJBQUE7QUFDSiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmFsaWRhdGlvbi1lcnJvcnN7XG4gICAgY29sb3I6IHJlZDsgXG4gICAgbWFyZ2luOiAxMHB4O1xuICAgIGZvbnQtc2l6ZTogNzUlO1xufVxuXG4uaW9zIGlvbi1idXR0b24ge1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIH0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".validation-errors {\n  color: red;\n  margin: 10px;\n  font-size: 75%;\n}\n\n.ios ion-button {\n  text-transform: uppercase;\n}\n\n.buttonSize {\n  size: 50%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFVBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtBQUNKOztBQUVBO0VBQ0kseUJBQUE7QUFDSjs7QUFFQTtFQUNJLFNBQUE7QUFDSiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmFsaWRhdGlvbi1lcnJvcnN7XG4gICAgY29sb3I6IHJlZDsgXG4gICAgbWFyZ2luOiAxMHB4O1xuICAgIGZvbnQtc2l6ZTogNzUlO1xufVxuXG4uaW9zIGlvbi1idXR0b24ge1xuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIH1cblxuLmJ1dHRvblNpemUge1xuICAgIHNpemU6IDUwJTtcbn0iXX0= */");
 
 /***/ }),
 
