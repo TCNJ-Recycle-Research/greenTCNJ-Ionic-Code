@@ -506,7 +506,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! /Users/pepped/Documents/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/es5-polyfills.js */
+      /*! /home/dean/work/csc498/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/es5-polyfills.js */
       "voQr");
 
       __webpack_require__(
@@ -514,15 +514,15 @@
       "R0gw");
 
       __webpack_require__(
-      /*! /Users/pepped/Documents/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */
+      /*! /home/dean/work/csc498/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/jit-polyfills.js */
       "rZy+");
 
       __webpack_require__(
-      /*! /Users/pepped/Documents/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/es5-jit-polyfills.js */
+      /*! /home/dean/work/csc498/greenTCNJ-Ionic-Code/node_modules/@angular-devkit/build-angular/src/webpack/es5-jit-polyfills.js */
       "aYjs");
 
       module.exports = __webpack_require__(
-      /*! /Users/pepped/Documents/greenTCNJ-Ionic-Code/src/polyfills.ts */
+      /*! /home/dean/work/csc498/greenTCNJ-Ionic-Code/src/polyfills.ts */
       "hN/g");
       /***/
     },
