@@ -25,7 +25,7 @@
     <ion-item lines="full">
       <ion-img alt="" class="center" src="../../assets/icon/icon.png" vertical-align="middle"></ion-img>
       <ion-label position="floating">First name</ion-label>
-      <ion-input  formControlName="firstName" type="text" required></ion-input>
+      <ion-input autocapitalize="words" formControlName="firstName" type="text" required></ion-input>
     </ion-item> 
 
     <!-- Error checking: checks to see if a valid name is entered (no numbers) and that it is less than 30 characters -->
@@ -40,7 +40,7 @@
     <!-- Collects Last Name and stores it into the form, this field is required -->
     <ion-item lines="full">
       <ion-label position="floating">Last name</ion-label>
-      <ion-input  formControlName="lastName" type="text" required></ion-input>
+      <ion-input autocapitalize="words" formControlName="lastName" type="text" required></ion-input>
     </ion-item>
 
     <!-- Error checking: checks to see if a valid name is entered (no numbers) and that it is less than 30 characters -->

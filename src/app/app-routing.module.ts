@@ -87,19 +87,23 @@ const routes: Routes = [
   },
   {
     path: 'suggestmaterial',
-    loadChildren: () => import('./pages/suggestmaterial/suggestmaterial.module').then( m => m.SuggestmaterialPageModule)
+    loadChildren: () => import('./pages/suggestmaterial/suggestmaterial.module').then( m => m.SuggestmaterialPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'qr-scanner',
-    loadChildren: () => import('./pages/qr-scanner/qr-scanner.module').then( m => m.QrScannerPageModule)
+    loadChildren: () => import('./pages/qr-scanner/qr-scanner.module').then( m => m.QrScannerPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'news-modal',
-    loadChildren: () => import('./pages/news-modal/news-modal.module').then( m => m.NewsModalPageModule)
+    loadChildren: () => import('./pages/news-modal/news-modal.module').then( m => m.NewsModalPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'my-registered-events',
-    loadChildren: () => import('./pages/my-registered-events/my-registered-events.module').then( m => m.MyRegisteredEventsPageModule)
+    loadChildren: () => import('./pages/my-registered-events/my-registered-events.module').then( m => m.MyRegisteredEventsPageModule),
+    canLoad: [AuthGuard]
   },
 ];
 

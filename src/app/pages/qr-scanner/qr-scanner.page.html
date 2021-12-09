@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [hidden]="scanActive">
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-menu-button menu ="main-menu"></ion-menu-button>
@@ -11,32 +11,38 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [style.--background]="scanActive ? '#00000000' : '#fff'">
+  <class [hidden]="scanActive">
+    <ion-item>
+      <p>
+        Here you can use your phone's camera to scan a GreenTCNJ QR code provided by an event organizer to let them know you attended. Make sure you give the app permissions to use your camera!
+      </p>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+          <ion-col>
+            <img alt="" class="center" src="../../assets/icon/qrscan.png" vertical-align="middle">
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-row class = "scanner-buttons">
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full" (click)="scanBarcode()">
+          <ion-icon name="scan" slot="start"></ion-icon>
+          Start Scan
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </class>
 
-  <ion-item>
-    <h1><strong>Coming soon</strong></h1>
-  </ion-item>
-
-  <ion-item >
-    <p>This page is currently not developed and cannot be tested.  Upon further implementation it will be used to set user attendance at events by scanning an event QR code.</p>
-  </ion-item>
-
-  <ion-row>
-    <ion-col>
-      <ion-button aria-label="Scan Attendance QR Code" type="submit" color="success" expand="block" (click)="scanBarcode()">Scan Attendance QR Code</ion-button>
-
-      <div *ngIf="scannedData">
-        <p>Scanned Text : </p>
-        <p>Scanned Format : </p>
-      </div>
-
+  <ion-row class = "scanner-buttons" [hidden]="!scanActive">
+    <ion-col class="ion-no-padding">
+      <ion-button expand="full" (click)="destroy()">
+        Stop
+      </ion-button>
     </ion-col>
-
-    
   </ion-row>
-
-
-
-
-
 </ion-content>
+
+<div class="scan-box" [hidden]="!scanActive">
+</div>

@@ -32,6 +32,7 @@ export class LoginPage {
   wrongInput: boolean = false;
   correctInput: boolean = false;
   missingInput: boolean = false;
+  unverifiedExists : boolean = false;
   canLogin: boolean = false;
 
   constructor(private storage: Storage, public menuCtrl: MenuController, private alertController: AlertController, private authService: AuthenticationService, private router: Router, public http: HttpClient, public navCtrl: NavController, public formBuilder: FormBuilder, private loadingController: LoadingController) {
@@ -90,6 +91,7 @@ checkValidLogin(){
                 this.invalidLogin = false;
                 this.correctInput = true;
                 this.missingInput = false;
+                this.unverifiedExists = false;
                 this.wrongInput = false;
 
                 
@@ -101,6 +103,17 @@ checkValidLogin(){
                 this.correctInput = false;
                 this.missingInput = true;
                 this.wrongInput = false;
+                this.unverifiedExists = false;
+                    
+              }else if(result["unverifiedExists"]){
+                // output error message of the account is unverified
+                console.log("Account is unverified");
+
+                this.invalidLogin = true;
+                this.correctInput = false;
+                this.missingInput = false;
+                this.unverifiedExists = true;
+                this.wrongInput = false;
                     
               }else{
                 // dont move to next page and output error message "Email or password entered was incorrect"
@@ -109,7 +122,9 @@ checkValidLogin(){
                 this.invalidLogin = true;
                 this.correctInput = false;
                 this.missingInput = false;
-                this.wrongInput = true;      
+                this.wrongInput = true;
+                this.unverifiedExists = false;
+      
               }
           });
 
@@ -177,6 +192,29 @@ checkValidLogin(){
         this.correctInput = false;
         this.missingInput = true;
         this.wrongInput = false;
+
+      // wrong credentials 
+      }else if(!this.loginSuccess() && !this.missingValues() && !this.wrongCredientals() && this.unverifiedAccount()){
+
+        console.log("Account is unverified");
+        
+        this.authService.login(this.loginForm.value).subscribe(
+          async (res) => {
+            await loading.dismiss();
+            const alert = await this.alertController.create({
+              header: 'Login failed',
+              message: 'You cannot log in until your account is verified.',
+              buttons: ['OK'],
+            });
+            await alert.present();
+          }
+        );
+
+        this.correctInput = false;
+        this.missingInput = true;
+        this.wrongInput = false;
+        this.unverifiedExists = true;
+
 
       // wrong credentials 
       }else if(!this.loginSuccess() && !this.missingValues() && this.wrongCredientals()){
@@ -250,6 +288,11 @@ checkValidLogin(){
 
     return this.missingInput;
 
+  }
+
+  unverifiedAccount(){
+
+    return this.unverifiedExists;
   }
 
 }

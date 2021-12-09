@@ -50,14 +50,15 @@ export class RecoverPasswordPage{
     
       this.http.post("https://recycle.hpc.tcnj.edu/php/password-resets-handler.php", JSON.stringify(obj)).subscribe(data => {
       
+          //not getting result
           var result = data as any[];
 
           if(result['missingInput']){
-            // output to user it succeeded and move to next page
             console.log("missing Input");
             this.emailSent = false;
 
           } else {
+            // output to user it succeeded and move to next page
             this.emailSent = true;
             console.log("email sent"); 
             this.emailForm.reset();

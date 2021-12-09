@@ -11,10 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import {IonicStorageModule} from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,13 +20,13 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   imports: [BrowserModule, 
     IonicModule.forRoot(),
     // NativeStorageModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule, 
     HttpClientModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     NativeStorage
   ],
