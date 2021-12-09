@@ -71,12 +71,10 @@
   <ion-footer class="ion-no-border padding-vertical">
     <ion-toolbar>
       <ion-item>
-        <ion-text class="ion-padding-vertical">Looking for a material that is not on our list? 
-          <a [routerLink]="['/suggestmaterial']" class="small-text">
-            <img class = "buttonSize" alt="" src = "../../assets/button.png">
-          </a>
+        <ion-text class="ion-padding-top">Looking for a material that is not on our list? 
         </ion-text>
       </ion-item>
+      <ion-button color ="primary" expand="block" size="medium" [routerLink]="['/suggestmaterial']">Suggest a material</ion-button>
     </ion-toolbar>
   </ion-footer>
 
