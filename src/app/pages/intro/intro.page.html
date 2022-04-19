@@ -7,7 +7,7 @@
 
 <ion-content>
   <ion-slides pager="true">
- 
+    
     <!-- Slide 1 -->
     <ion-slide>
       <ion-text color="light">
@@ -25,6 +25,17 @@
         <img alt="" src="../../assets/RecyclingRoscoe.png">
         <h1>Not sure where to recycle materials on campus?</h1>
         <p>Green TCNJ can show you what materials can be recycled and where to recycle among many other features!</p>
+        <ion-button aria-label="Next" (click)="next()" fill="outline" color="light">Next</ion-button>
+      </ion-text>
+    </ion-slide>
+
+     <!-- Slide 3 -->
+    <ion-slide>
+      <ion-text color="light">
+        <img alt="" src="../../assets/wifi_vpn.png" style="width: auto; height: auto;">
+        <h1>Important (PLEASE READ):</h1>
+        <p style="font-size: small">To use the Green TCNJ mobile application, you must be on campus and connected to the TCNJ Wi-Fi.</p>
+        <p style="font-size: small">To access the app off campus, you need to be logged into TCNJ's VPN with an active campus community member's credentials</p>
         <ion-button aria-label="Start" (click)="start()" fill="outline" color="light">Start</ion-button>
       </ion-text>
     </ion-slide>
