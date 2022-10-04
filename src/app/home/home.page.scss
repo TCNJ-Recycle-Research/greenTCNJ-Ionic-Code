@@ -29,7 +29,7 @@
 
 .divider {
   display: flex;
-  
+
   &:before,
   &:after {
     content: "";
@@ -41,18 +41,18 @@
   align-items: center;
   margin: 1em -1em;
   color: #cccccc;
-  
+
   &:before,
   &:after {
     height: 1px;
     margin: 0 1em;
   }
-} 
+}
 
 .one-line {
   &:before,
   &:after {
-     background: #cccccc;
+    background: #cccccc;
   }
 }
 
@@ -74,13 +74,11 @@ a {
   text-decoration: underline;
 }
 
-
-ion-item ion-label ion-list-header ion-title{
+ion-item ion-label ion-list-header ion-title {
   white-space: normal;
 }
 
-ion-item-divider{
+ion-item-divider {
   margin-top: 0px;
-  min-height: 1px!important;
+  min-height: 1px !important;
 }
-
