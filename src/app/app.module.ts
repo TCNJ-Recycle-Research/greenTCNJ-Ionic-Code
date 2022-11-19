@@ -15,21 +15,20 @@ import {IonicStorageModule} from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, 
-    IonicModule.forRoot(),
-    // NativeStorageModule.forRoot(),
-    IonicStorageModule.forRoot(),
-    AppRoutingModule, 
-    HttpClientModule,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    NativeStorage
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [BrowserModule,
+        IonicModule.forRoot(),
+        // NativeStorageModule.forRoot(),
+        IonicStorageModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        NativeStorage
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
