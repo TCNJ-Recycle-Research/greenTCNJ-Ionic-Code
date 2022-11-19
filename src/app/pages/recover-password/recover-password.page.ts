@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from "@angular/forms";
 import { HttpClient} from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -10,13 +10,13 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class RecoverPasswordPage{
   emailInput: string = "";
-  emailForm: FormGroup;
-  myControl: FormControl;
+  emailForm: UntypedFormGroup;
+  myControl: UntypedFormControl;
   emailSent: boolean = false;
 
   // firstName: new FormControl()
 
-  constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder) {
+  constructor(private router: Router, public http: HttpClient, public formBuilder: UntypedFormBuilder) {
     this.emailForm = formBuilder.group({
         // Require validators for the input fields so we can quickly tell them if their input is valid, the patten string is what characters
         // are allowed in the field and for email it makes sure there is a @ character and a domain field like .com

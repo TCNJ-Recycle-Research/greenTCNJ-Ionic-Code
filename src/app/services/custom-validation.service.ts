@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 // This file was made to check that passwords are equivalent on the registration page, it is a custom validator as there is 
 // no default password match validator
@@ -12,7 +12,7 @@ export class CustomValidationService {
 
   //loks at 2 string values within a form group and compares them
   passwordMatchValidator(password: string, confirmPassword: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const passwordControl = formGroup.controls[password];
       const confirmPasswordControl = formGroup.controls[confirmPassword];
 

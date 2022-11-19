@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { NavController } from '@ionic/angular'; 
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from "@angular/forms";
 import { Router, NavigationExtras } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from './../../services/authentication.service';
@@ -23,8 +23,8 @@ export class LoginPage {
   passwordInput: string = "";
   
   // form variables
-  loginForm: FormGroup;
-  myControl: FormControl;
+  loginForm: UntypedFormGroup;
+  myControl: UntypedFormControl;
 
   // boolean values for login checks 
   invalidLogin: boolean = false;
@@ -35,7 +35,7 @@ export class LoginPage {
   unverifiedExists : boolean = false;
   canLogin: boolean = false;
 
-  constructor(private storage: Storage, public menuCtrl: MenuController, private alertController: AlertController, private authService: AuthenticationService, private router: Router, public http: HttpClient, public navCtrl: NavController, public formBuilder: FormBuilder, private loadingController: LoadingController) {
+  constructor(private storage: Storage, public menuCtrl: MenuController, private alertController: AlertController, private authService: AuthenticationService, private router: Router, public http: HttpClient, public navCtrl: NavController, public formBuilder: UntypedFormBuilder, private loadingController: LoadingController) {
     this.loginForm = formBuilder.group({
         // Require validators for the input fields so we can quickly tell them if their input is valid, the patten string is what characters
         // are allowed in the field and for email it makes sure there is a @ character and a domain field like .com

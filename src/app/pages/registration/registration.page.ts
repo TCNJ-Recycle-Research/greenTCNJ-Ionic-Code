@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from "@angular/forms";
 import { HttpClient} from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 import { CustomValidationService } from 'src/app/services/custom-validation.service';
@@ -16,8 +16,8 @@ import { Alert } from 'selenium-webdriver';
 export class RegistrationPage implements OnInit{
 
   @ViewChild(IonSlides)slides: IonSlides;
-  signupForm: FormGroup;
-  myControl: FormControl;
+  signupForm: UntypedFormGroup;
+  myControl: UntypedFormControl;
   invalidRegistration: boolean = false;
   tempTest: {recycling_interest: boolean, water_interest: boolean, pollution_interest: boolean, energy_interest: boolean};
   temp: {recycling: any, water: any, pollution: any, energy: any};
@@ -38,7 +38,7 @@ export class RegistrationPage implements OnInit{
       { val: 'Energy', isChecked: false }
     ];
 
-  constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder, private customValidator: CustomValidationService, private alertCtrl: AlertController) {
+  constructor(private router: Router, public http: HttpClient, public formBuilder: UntypedFormBuilder, private customValidator: CustomValidationService, private alertCtrl: AlertController) {
     this.signupForm = formBuilder.group({
         firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
         lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { HttpClient} from '@angular/common/http';
 import { NavController } from '@ionic/angular'; 
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from "@angular/forms";
 import { CustomValidationService } from 'src/app/services/custom-validation.service';
 
 @Component({
@@ -14,10 +14,10 @@ export class ResetPasswordPage{
 
   passwordInput: string = "";
   passwordConfirmInput: string = "";
-  resetForm: FormGroup;
-  myControl: FormControl;
+  resetForm: UntypedFormGroup;
+  myControl: UntypedFormControl;
 
-  constructor(public http: HttpClient, public navCtrl: NavController, public formBuilder: FormBuilder, private customValidator: CustomValidationService, private platform: Platform) {
+  constructor(public http: HttpClient, public navCtrl: NavController, public formBuilder: UntypedFormBuilder, private customValidator: CustomValidationService, private platform: Platform) {
     this.resetForm = formBuilder.group({
         password: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
         passwordRepeat: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
