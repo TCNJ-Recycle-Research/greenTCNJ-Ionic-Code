@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { HttpClient} from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -13,15 +13,15 @@ import { Storage } from '@ionic/storage';
 export class SuggestmaterialPage{
 
   emailInput: string = "";
-  wordForm: UntypedFormGroup;
-  myControl: UntypedFormControl;
+  wordForm: FormGroup;
+  myControl: FormControl;
   wordSent: boolean = false;
   today = new Date(Date.now());
   usrEmail;
 
   // firstName: new FormControl()
 
-  constructor(private router: Router, public http: HttpClient, public formBuilder: UntypedFormBuilder, private storage: Storage) {
+  constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder, private storage: Storage) {
     this.wordForm = formBuilder.group({
         // Require validators for the input fields so we can quickly tell them if their input is valid, the patten string is what characters
         // are allowed in the field and for email it makes sure there is a @ character and a domain field like .com
