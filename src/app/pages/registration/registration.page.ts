@@ -42,7 +42,7 @@ export class RegistrationPage implements OnInit{
     this.signupForm = formBuilder.group({
         firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
         lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-        email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.required])],
+        email: ['', Validators.compose([Validators.maxLength(45), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.required])],
         // https://stackoverflow.com/questions/48350506/how-to-validate-password-strength-with-angular-5-validator-pattern
         password: ['', Validators.compose([Validators.maxLength(30), Validators.minLength(8),Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}'), Validators.required])],
         passwordRepeat: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
@@ -90,7 +90,7 @@ export class RegistrationPage implements OnInit{
       { type: 'pattern', message: 'You must enter a valid last name' }
     ],
     'email': [
-        { type: 'maxlength', message: 'Your email cannot be more than 30 characters long.' },
+        { type: 'maxlength', message: 'Your email cannot be more than 45 characters long.' },
         { type: 'required', message: 'An email is required.' },
         { type: 'pattern', message: 'You must enter a valid email.' }
       ],
