@@ -39,7 +39,7 @@ export class LoginPage {
     this.loginForm = formBuilder.group({
         // Require validators for the input fields so we can quickly tell them if their input is valid, the patten string is what characters
         // are allowed in the field and for email it makes sure there is a @ character and a domain field like .com
-        email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.required])],
+        email: ['', Validators.compose([Validators.maxLength(45), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.required])],
         password: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
     });
     this.menuCtrl.enable(false);
@@ -50,7 +50,7 @@ export class LoginPage {
   // responsible for printing error messages to the screen based on validator 
   validation_messages = {
     'email': [
-        { type: 'maxlength', message: 'Your email cannot be more than 30 characters long.' },
+        { type: 'maxlength', message: 'Your email cannot be more than 45 characters long.' },
         { type: 'pattern', message: 'You must enter a valid email.' }
       ],
       'password': [
