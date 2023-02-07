@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "951757046204",
+    "project_id": "green-push-notif-7c390",
+    "storage_bucket": "green-push-notif-7c390.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951757046204:android:0519023de5ad75d5212bb9",
+        "android_client_info": {
+          "package_name": "io.ionic.greentcnj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951757046204-cr7iat0oe2499qg9r3kqqt7hcuf68u0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALMjsI1H2W0F0RhHa2S6-qlTKgnOpyfW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951757046204-cr7iat0oe2499qg9r3kqqt7hcuf68u0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
