@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import {  MenuController } from '@ionic/angular';
 
 
@@ -31,9 +31,9 @@ export class IntroPage implements OnInit {
   // sets a key meaning that the app user is no longer new to the app so they will not see this page again once they have seen it yet
   async start() {
 
-    await Storage.set({key: INTRO_KEY, value: 'true'});
+    await Preferences.set({key: INTRO_KEY, value: 'true'});
 
-    Storage.migrate();
+    Preferences.migrate();
 
     // reditrects to the start page and clears url
     this.router.navigateByUrl('/start', { replaceUrl:true });
