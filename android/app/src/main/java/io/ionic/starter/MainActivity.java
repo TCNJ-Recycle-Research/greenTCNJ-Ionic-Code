@@ -8,10 +8,10 @@ import com.getcapacitor.Plugin;
 import java.util.ArrayList;
 
 public class MainActivity extends BridgeActivity {
-  //@Override
-  //public void onCreate(Bundle savedInstanceState) {
+    //@Override
+    //public void onCreate(Bundle savedInstanceState) {
     //super.onCreate(savedInstanceState);
 
     //any custom plugins go here
-  //}
+    //}
 }
