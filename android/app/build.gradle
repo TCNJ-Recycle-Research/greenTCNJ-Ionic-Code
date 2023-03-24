@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.ionic.GreenTCNJ"
+        applicationId "io.ionic.greentcnj"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion 31
         versionCode 7

@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.ionic.GreenTCNJ">
+    package="io.ionic.greentcnj">
 
     <application
         android:allowBackup="true"
@@ -14,12 +14,12 @@
         android:hardwareAccelerated="true">
 
         <activity
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name="io.ionic.greentcnj.MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBarLaunch"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBarLaunch">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
