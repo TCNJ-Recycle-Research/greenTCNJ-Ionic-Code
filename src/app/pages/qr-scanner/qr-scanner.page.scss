@@ -1,3 +1,13 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .scanner-buttons {
     margin: 0px;
     position: absolute;
@@ -18,4 +28,12 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
+}
+
+// Added CSS property to align QR code image from the "center" class name
+img.center {
+    height: auto;
+    width: auto;
+    display: block;
+    margin: 0 auto;
 }
