@@ -23,6 +23,7 @@ export class EventModalPage implements AfterViewInit {
   eventObj;
   eventID;
   eventName;
+  eventLocation;
   eventTime;
   eventDescription;
 

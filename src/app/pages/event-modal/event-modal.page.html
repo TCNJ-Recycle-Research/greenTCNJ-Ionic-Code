@@ -11,17 +11,30 @@
     <ion-list-header class="ion-padding-right ion-padding-top">
       <h1 class="ion-no-margin" [innerHTML]="eventName"></h1>
     </ion-list-header>
+
     <ion-item lines="full">
       <ion-text  class="ion-color-medium" color="ion-color-medium" >
         <p class="ion-no-margin" [innerHTML]="eventTime"></p>
       </ion-text>
     </ion-item>
+
+    <!-- Added 9/2/23 to take into consideration event location on the modal page -->
+    <ion-item lines="full">
+     <ion-text  class="ion-color-medium" color="ion-color-medium" >
+        <p class="ion-no-margin" [innerHTML]="eventLocation"></p>
+      </ion-text>
+    </ion-item>
+
     <ion-item lines="full" >
       <ion-text>
         <p [innerHTML]="eventDescription"></p>
       </ion-text>
     </ion-item>
+    
     <ion-button aria-label="Register" [class.ion-hide]="registered == true" class="ion-margin-top" color="success" expand="block" (click)="registerForEvent()">Register</ion-button>
     <ion-button aria-label="Unregister" [class.ion-hide]="registered == false" class="ion-margin-top" color="danger" expand="block" (click)="unregisterForEvent()">Unregister</ion-button>
   </ion-list>
 </ion-content>
+
+
+ 

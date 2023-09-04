@@ -19,6 +19,7 @@ export class SchedulePage {
   
   eventName: string;
   eventDate: Date;
+  eventLocation: string;
   eventStartTime: Date;
   eventEndTime: Date;
 
@@ -85,7 +86,12 @@ createStaticNormalDayEvents(events) {
       date = new Date(parseInt(date[0]), parseInt(date[1]) - 1, parseInt(date[2]));
 
       var name = events[i]["eventName"];
+
+      var location = events[i]["eventLocation"];
+
       var description = events[i]["eventDescription"];
+
+      
 
       var start = events[i]["startTime"].split(":", 2);
 
@@ -105,6 +111,7 @@ createStaticNormalDayEvents(events) {
           startTime: startTime,
           endTime: endTime,
           desc: description,
+          location: location,
           allDay: false,
           ID: events[i]["eventID"],
           registered: (events[i]["attended"] != null)
@@ -143,6 +150,7 @@ createStaticNormalDayEvents(events) {
       componentProps:{
         eventObj: event,
         eventName: event.title,
+        eventLocation: event.location,
         eventTime: date + '    '  + start + ' - ' + end,
         eventDescription: this.linkify(event.desc),
         eventID: event.ID,
