@@ -105,6 +105,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/my-registered-events/my-registered-events.module').then( m => m.MyRegisteredEventsPageModule),
     canLoad: [AuthGuard]
   },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./pages/about-us/about-us.module').then( m => m.AboutUsPageModule),
+    canLoad: [AuthGuard]
+  },
 ];
 
 @NgModule({
