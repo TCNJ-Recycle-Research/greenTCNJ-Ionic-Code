@@ -8,3 +8,34 @@ a {
     text-align: center;
     text-decoration: underline;
   }
+
+.contributor_element{
+    text-align: center;
+}
+
+.contributor_element_thank{
+    background-color: red;
+}
+
+p.thank_you_message{
+    text-align: center;
+}
+
+.thank_you_message{
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.container{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contributor_box{
+    border: 3px;
+    border-style: solid;
+    border-radius: 16px;
+    border-color: #28ba62;
+    max-width: 75%;
+    margin: auto
+}
