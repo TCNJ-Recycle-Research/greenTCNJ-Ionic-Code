@@ -32,6 +32,7 @@
     "@capacitor/preferences": "^4.0.2",
     "@capacitor/status-bar": "^4.0.0",
     "@ionic-native/app-update": "^5.36.0",
+    "@ionic-native/app-version": "^5.36.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/http": "^5.36.0",
     "@ionic-native/mobile-accessibility": "^5.31.1",
