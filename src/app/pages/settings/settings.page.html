@@ -17,14 +17,17 @@
 
 <ion-content>
   <ion-list>
+
+    <!-- Button triggers dark theme event -->
     <ion-item lines="full">
       <ion-icon slot="start" name="moon"></ion-icon>
       <ion-label>
         Toggle Dark Theme
       </ion-label>
-      <ion-toggle (ionChange)='toggleTheme($event)' slot="end"></ion-toggle>
+      <ion-toggle (ionChange)='toggleTheme($event)' slot="end" ></ion-toggle>
     </ion-item>
 
+    <!-- Button triggers push notifications event -->
     <ion-item lines="full">
       <ion-label>
        Receive push notifications

@@ -39,6 +39,7 @@ export class SettingsPage {
     this.loadInterests();
   }
 
+  // Trigger global dark/light theming, by passing event as a parameter to this function
   toggleTheme(event){
     if(event.detail.checked){
       document.body.setAttribute('color-theme', 'dark')
