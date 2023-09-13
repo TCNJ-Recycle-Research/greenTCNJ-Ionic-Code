@@ -13,17 +13,11 @@ a {
     text-align: center;
 }
 
-.contributor_element_thank{
-    background-color: red;
-}
-
-p.thank_you_message{
-    text-align: center;
-}
-
 .thank_you_message{
     font-size: 1rem;
     font-style: italic;
+    text-align: center;
+    margin: auto;
 }
 
 .container{
@@ -35,7 +29,8 @@ p.thank_you_message{
     border: 3px;
     border-style: solid;
     border-radius: 16px;
+    box-shadow: -3px 1px 15px -0.5px #bfbebe;
     border-color: #28ba62;
     max-width: 75%;
-    margin: auto
+    margin: auto;
 }
