@@ -11,8 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
+
 import {IonicStorageModule} from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
+import { AppVersion } from "@ionic-native/app-version/ngx";
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +30,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
   ],
   providers: [
     StatusBar,
+    AppVersion,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     NativeStorage

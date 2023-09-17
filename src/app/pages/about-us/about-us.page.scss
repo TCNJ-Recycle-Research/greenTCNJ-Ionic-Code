@@ -1,0 +1,37 @@
+p {
+    margin: 20px;
+    //padding: 40px;
+}
+
+a {
+    text-decoration: none;
+    text-align: center;
+    text-decoration: underline;
+  }
+
+.contributor_element{
+    text-align: center;
+}
+
+.thank_you_message{
+    font-size: 1rem;
+    font-style: italic;
+    text-align: center;
+    margin: auto;
+}
+
+.container{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contributor_box{
+    border: 3px;
+    border-style: solid;
+    border-radius: 16px;
+    box-shadow: -3px 1px 15px -0.5px #bfbebe;
+    border-color: #28ba62;
+    max-width: 75%;
+    margin: auto;
+}
+

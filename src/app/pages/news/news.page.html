@@ -17,20 +17,14 @@
         </ion-label>
       </ion-list-header> -->
 
-      <ion-item lines="full" *ngFor="let article of news" button (click)="onArticleSelected(article)">
+      <ion-item color="ion-color-dark" lines="full" *ngFor="let article of news" button (click)="onArticleSelected(article)">
         <!-- <ion-thumbnail slot="start">
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-thumbnail> -->
-        <ion-label>
-          <h2>
-            {{ article.title }}
-          </h2>
-          <p> By: 
-            {{ article.author }}
-          </p>
-          <p>
-            {{ article.datePublished }}
-          </p>
+        <ion-label color="ion-color-dark">
+          <h2 color="ion-color-dark">{{ article.title }}</h2>
+          <p color="ion-color-dark"> By: {{ article.author }}</p>
+          <p color="ion-color-dark">{{ article.datePublished }}</p>
 
           <!-- <ion-item  >
             <ion-text  >
