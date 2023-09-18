@@ -9,6 +9,10 @@ a {
     text-decoration: underline;
   }
 
+.about_intro_desc{
+    margin-bottom: 1px;
+}
+
 .contributor_element{
     text-align: center;
 }
@@ -35,3 +39,17 @@ a {
     margin: auto;
 }
 
+.about_intro_desc{
+    padding: 0px 10px;
+}
+
+#name_3{
+    font-size: 0.9rem;
+}
+
+.roscoe_image{
+  height: 10vh;
+  width: auto;
+  margin: auto;
+  display: block;
+}
