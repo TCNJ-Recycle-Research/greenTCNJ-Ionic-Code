@@ -30,6 +30,7 @@
     "@capacitor/ios": "^4.0.0",
     "@capacitor/keyboard": "^4.0.0",
     "@capacitor/preferences": "^4.0.2",
+    "@capacitor/push-notifications": "^5.1.0",
     "@capacitor/status-bar": "^4.0.0",
     "@ionic-native/app-update": "^5.36.0",
     "@ionic-native/app-version": "^5.36.0",
