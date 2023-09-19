@@ -99,6 +99,7 @@ export class HomePage implements OnInit {
     });
   }
 
+  // Added 9/18/23 to demo push notificaions through the Firebase SDK
   ngOnInit() {
     console.log("Initializing HomePage");
 
@@ -131,6 +132,7 @@ export class HomePage implements OnInit {
 
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
+      // Modify this listener to navigate to page with relevant information after clicking on the notification?
       (notification: ActionPerformed) => {
         alert("Push action performed: " + JSON.stringify(notification));
       }

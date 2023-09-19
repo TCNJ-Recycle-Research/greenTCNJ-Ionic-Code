@@ -1,6 +1,5 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
-
 const config: CapacitorConfig = {
   "appId": "io.ionic.GreenTCNJ",
   "appName": "GreenTCNJ",
