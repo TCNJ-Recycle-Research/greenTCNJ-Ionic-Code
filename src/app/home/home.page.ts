@@ -115,9 +115,10 @@ export class HomePage implements OnInit {
       }
     });
 
-    PushNotifications.addListener("registration", (token: Token) => {
-      alert("Push registration success, token: " + token.value);
-    });
+    // Might remove this when initially loading the appilcation. 
+    // PushNotifications.addListener("registration", (token: Token) => {
+    //   alert("Push registration success, token: " + token.value);
+    // });
 
     PushNotifications.addListener("registrationError", (error: any) => {
       alert("Error on registration: " + JSON.stringify(error));
@@ -134,7 +135,8 @@ export class HomePage implements OnInit {
       "pushNotificationActionPerformed",
       // Modify this listener to navigate to page with relevant information after clicking on the notification?
       (notification: ActionPerformed) => {
-        alert("Push action performed: " + JSON.stringify(notification));
+        // alert("Push action performed: " + JSON.stringify(notification));
+        alert("What is good! " + JSON.stringify(notification.notification.title) + "\n"); 
       }
     );
   }
