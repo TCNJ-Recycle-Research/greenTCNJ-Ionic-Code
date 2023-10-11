@@ -45,26 +45,38 @@ export class QrScannerPage implements OnInit {
       BarcodeScanner.openSettings();
       return;
     }
-    
     // The user was able to accept permissions for camera access
-    alert("You have granted permission to use the camera.");
 
     // Open scanning app based on Google Play Services (android) and IOS equivalent
-    const result = await BarcodeScanner.scan({
+    const {barcodes} = await BarcodeScanner.scan({
       formats: [BarcodeFormat.QrCode],
     });
 
-    if(result.barcodes){
-      alert("Hello World");
+    //Temporarily add current barcode value into the list, and get raw event ID.
+    this.barcodes.push(...barcodes);
+
+    if(barcodes[0].rawValue){
+        // Call corresponding function to add the current participant in the handler PHP function in the live server
+        
+        var obj = {func: "add_participant", eventID: barcodes[0].rawValue, userID: this.usrID, attendance: 1};
+        this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
+          var response = data as any[];
+        });
+        
+        //Allow the user to give the option to rescan another QR code
+        if(confirm("You have sucessfully registered for this GreenTCNJ event! Do you want to scan again?")){
+            this.scanBarcode();
+        }
+    }
+    else{
+      //When QR code was unidentifiable, allow user to scan again
+      if(confirm("Sorry!, nothing was read from that QR code, or it was unspecified. Try again.")){
+            this.scanBarcode();
+      }
     }
 
-    var obj = {func: "add_participant", eventID: result.barcodes, userID: this.usrID, attendance: 1};
-    this.http.post("https://recycle.hpc.tcnj.edu/php/participants-handler.php", JSON.stringify(obj)).subscribe(data => {
-      var response = data as any[];
-    });
-
   }
-
+  
   // Allow the user to pick whether they should allow camera permissions to use the barcode scanner (should be yes)
   async requestPermissions(): Promise<boolean> {
     const { camera } = await BarcodeScanner.requestPermissions();
