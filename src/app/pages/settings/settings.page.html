@@ -10,9 +10,6 @@
     </ion-buttons>
   </ion-toolbar>
 
-
-
-  
 </ion-header>
 
 <ion-content>
@@ -38,7 +35,7 @@
 
 
   <br>
-  <ion-list>
+  <ion-list> 
     <ion-title>Manage my interests</ion-title>
     <ion-item *ngFor="let entry of form">
       <ion-label>{{entry.val}}</ion-label>
@@ -47,15 +44,15 @@
     <ion-button aria-label="update interests" [disabled]="buttonDisabled" color="success" expand="full" (click)="updateUserInterests()">Update Interests</ion-button>
   </ion-list>
   
-
-
-
-
-
 </ion-content>
 
-
 <ion-footer class="ion-no-border">
+
+  <ion-toolbar>
+    <!-- Confimation screen should be placed before user clicks delete account -->
+    <ion-button color = "danger" aria-label="deleteAccount" expand="full" (click)="deleteAccount()">Delete account</ion-button>
+  </ion-toolbar>
+
   <ion-toolbar>
     
     <ion-button aria-label="logout" expand="full" (click)="logout()">Logout</ion-button>
