@@ -6,6 +6,7 @@ import { CustomValidationService } from 'src/app/services/custom-validation.serv
 import { IonSlides } from '@ionic/angular';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Alert } from 'selenium-webdriver';
+import { Keyboard } from '@capacitor/keyboard';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class RegistrationPage implements OnInit{
       { val: 'Pollution Prevention', isChecked: false },
       { val: 'Energy', isChecked: false }
     ];
+    
 
   constructor(private router: Router, public http: HttpClient, public formBuilder: FormBuilder, private customValidator: CustomValidationService, private alertCtrl: AlertController) {
     this.signupForm = formBuilder.group({
@@ -55,6 +57,15 @@ export class RegistrationPage implements OnInit{
         // ]
 
     }, {validator: this.customValidator.passwordMatchValidator('password', 'passwordRepeat')} );
+
+    Keyboard.addListener("keyboardDidShow", () => {
+      if (document.activeElement) {
+        document.activeElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    });
 
     // initialized to all 0s for false
     this.temp = {

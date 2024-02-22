@@ -1,4 +1,5 @@
 import { CapacitorConfig } from '@capacitor/cli';
+import { KeyboardResize, KeyboardStyle } from "@capacitor/keyboard";
 
 
 const config: CapacitorConfig = {
@@ -9,6 +10,10 @@ const config: CapacitorConfig = {
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "Keyboard": {
+      "resize": KeyboardResize.Body,
+      "resizeOnFullScreen": true,
     }
   },
   "cordova": {}
